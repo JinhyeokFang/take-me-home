@@ -6,9 +6,9 @@ export class Pet {
   readonly id: string;
   adoptable = true;
 
-  constructor(information: Information) {
+  constructor(information: Information, id?: string) {
     this.information = information;
-    this.id = randomUUID();
+    this.id = id || randomUUID();
   }
 
   adopt() {

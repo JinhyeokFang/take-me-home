@@ -1,11 +1,17 @@
+import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import { Gender } from '../domain/gender';
 import { Pet } from '../domain/pet';
 import { Species } from '../domain/species';
+import { PetEntity } from '../infrastructure/pet.entity';
 import { PetService } from './pet.service';
 
 describe('PetService', () => {
   let petService: PetService;
+  let dataSource: DataSource;
+
   const PET_INFORMATION = {
     name: 'jest',
     age: 1,
@@ -20,9 +26,29 @@ describe('PetService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        TypeOrmModule.forRootAsync({
+          useFactory: () => {
+            return {
+              type: 'mysql',
+              host: 'localhost',
+              port: 3306,
+              username: 'root',
+              password: '',
+              database: 'test',
+              entities: [PetEntity],
+              synchronize: true,
+            };
+          },
+          dataSourceFactory: async (option) => {
+            dataSource = new DataSource(option);
+            return await dataSource.initialize();
+          },
+        }),
+        TypeOrmModule.forFeature([PetEntity]),
+      ],
       providers: [PetService],
     }).compile();
-
     petService = module.get<PetService>(PetService);
   });
 
@@ -31,5 +57,9 @@ describe('PetService', () => {
     await petService.save(petWillSaved);
     const pet = await petService.findOneById(petWillSaved.id);
     expect(pet).not.toBe(null);
+  });
+
+  afterAll(async () => {
+    await dataSource.destroy();
   });
 });
