@@ -6,6 +6,7 @@ import { Gender } from '../domain/gender';
 import { Pet } from '../domain/pet';
 import { Species } from '../domain/species';
 import { PetEntity } from '../infrastructure/pet.entity';
+import { PetTypeormRepository } from '../infrastructure/pet.typeorm.repository';
 import { PetService } from './pet.service';
 
 describe('PetService', () => {
@@ -47,7 +48,7 @@ describe('PetService', () => {
         }),
         TypeOrmModule.forFeature([PetEntity]),
       ],
-      providers: [PetService],
+      providers: [PetTypeormRepository, PetService],
     }).compile();
     petService = module.get<PetService>(PetService);
   });
