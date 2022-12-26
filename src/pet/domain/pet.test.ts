@@ -14,6 +14,13 @@ describe('Pet', () => {
     },
     species: Species.Dog,
   };
+
+  it('Pet.id', () => {
+    const pet = new Pet(PET_INFORMATION);
+    const anotherPet = new Pet(PET_INFORMATION);
+    expect(pet.id).not.toBe(anotherPet.id);
+  });
+
   it('Pet.adopt()', () => {
     const pet = new Pet(PET_INFORMATION);
     expect(pet.adoptable).toBe(true);

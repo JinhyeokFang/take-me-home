@@ -1,6 +1,6 @@
-import { Birthday } from "./birthday";
-import { Gender } from "./gender";
-import { Species } from "./species";
+import { Birthday } from './birthday';
+import { Gender } from './gender';
+import { Species } from './species';
 
 export interface Information {
   name: string;
