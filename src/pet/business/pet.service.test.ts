@@ -1,4 +1,3 @@
-import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
@@ -14,7 +13,7 @@ describe('PetService', () => {
   let dataSource: DataSource;
 
   const PET_INFORMATION = {
-    name: 'jest',
+    name: 'testPetName',
     age: 1,
     gender: Gender.Male,
     birthday: {
@@ -25,7 +24,7 @@ describe('PetService', () => {
     species: Species.Dog,
   };
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         TypeOrmModule.forRootAsync({
@@ -51,6 +50,7 @@ describe('PetService', () => {
       providers: [PetTypeormRepository, PetService],
     }).compile();
     petService = module.get<PetService>(PetService);
+    await dataSource.getRepository(PetEntity).delete({});
   });
 
   it('PetService.save(Pet)', async () => {
@@ -58,6 +58,7 @@ describe('PetService', () => {
     await petService.save(petWillSaved);
     const pet = await petService.findOneById(petWillSaved.id);
     expect(pet).not.toBe(null);
+    expect(pet.information.name).toBe(PET_INFORMATION.name);
   });
 
   afterAll(async () => {

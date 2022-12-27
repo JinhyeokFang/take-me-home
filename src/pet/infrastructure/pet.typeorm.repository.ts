@@ -24,6 +24,7 @@ export class PetTypeormRepository implements PetRepository {
   private convertToTypeormEntity(pet: Pet): PetEntity {
     const petEntity = new PetEntity();
     petEntity.id = pet.id;
+    petEntity.name = pet.information.name;
     return petEntity;
   }
 
@@ -41,7 +42,7 @@ export class PetTypeormRepository implements PetRepository {
     const petId = petEntity.id;
     const pet = new Pet(
       {
-        name: 'jest',
+        name: petEntity.name,
         age: 1,
         gender: Gender.Male,
         birthday: {
