@@ -1,11 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { Gender } from '../domain/gender';
 import { Pet } from '../domain/pet';
 import { Species } from '../domain/species';
 import { PetEntity } from '../infrastructure/pet.entity';
-import { PetTypeormRepository } from '../infrastructure/pet.typeorm.repository';
+import { getPetTestModules } from '../pet.test-module';
 import { PetService } from './pet.service';
 
 describe('PetService', () => {
@@ -25,31 +23,11 @@ describe('PetService', () => {
   };
 
   beforeAll(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        TypeOrmModule.forRootAsync({
-          useFactory: () => {
-            return {
-              type: 'mysql',
-              host: 'localhost',
-              port: 3306,
-              username: 'root',
-              password: '',
-              database: 'test',
-              entities: [PetEntity],
-              synchronize: true,
-            };
-          },
-          dataSourceFactory: async (option) => {
-            dataSource = new DataSource(option);
-            return await dataSource.initialize();
-          },
-        }),
-        TypeOrmModule.forFeature([PetEntity]),
-      ],
-      providers: [PetTypeormRepository, PetService],
-    }).compile();
-    petService = module.get<PetService>(PetService);
+    const modules = await getPetTestModules();
+    const testModule = modules.testModule;
+    dataSource = modules.dataSource;
+
+    petService = testModule.get<PetService>(PetService);
     await dataSource.getRepository(PetEntity).delete({});
   });
 
