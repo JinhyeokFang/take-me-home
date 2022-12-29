@@ -3,12 +3,12 @@ import { Gender } from '../domain/gender';
 import { Information } from '../domain/information';
 import { Pet } from '../domain/pet';
 import { Species } from '../domain/species';
-import { PetEntity } from '../infrastructure/pet.entity';
+import { PetEntity } from './pet.entity';
 import { getPetTestModules } from '../pet.test-module';
-import { PetService } from './pet.service';
+import { PetTypeormRepository } from './pet.typeorm.repository';
 
 describe('PetService', () => {
-  let petService: PetService;
+  let petRepository: PetTypeormRepository;
   let dataSource: DataSource;
 
   const PET_INFORMATION: Information = {
@@ -28,14 +28,14 @@ describe('PetService', () => {
     const testModule = modules.testModule;
     dataSource = modules.dataSource;
 
-    petService = testModule.get<PetService>(PetService);
+    petRepository = testModule.get<PetTypeormRepository>(PetTypeormRepository);
     await dataSource.getRepository(PetEntity).delete({});
   });
 
-  it('PetService.save(Pet)', async () => {
+  it('PetTypeormRepository.save(Pet)', async () => {
     const petWillSaved = new Pet(PET_INFORMATION);
-    await petService.save(petWillSaved);
-    const pet = await petService.findOneById(petWillSaved.id);
+    await petRepository.save(petWillSaved);
+    const pet = await petRepository.findOneById(petWillSaved.id);
     expect(pet).not.toBe(null);
     expect(pet.information).toStrictEqual(PET_INFORMATION);
   });
