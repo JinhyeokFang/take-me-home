@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import { Gender } from '../domain/gender';
+import { Information } from '../domain/information';
 import { Pet } from '../domain/pet';
 import { Species } from '../domain/species';
 import { PetEntity } from '../infrastructure/pet.entity';
@@ -10,7 +11,7 @@ describe('PetService', () => {
   let petService: PetService;
   let dataSource: DataSource;
 
-  const PET_INFORMATION = {
+  const PET_INFORMATION: Information = {
     name: 'testPetName',
     age: 1,
     gender: Gender.Male,
@@ -36,7 +37,7 @@ describe('PetService', () => {
     await petService.save(petWillSaved);
     const pet = await petService.findOneById(petWillSaved.id);
     expect(pet).not.toBe(null);
-    expect(pet.information.name).toBe(PET_INFORMATION.name);
+    expect(pet.information).toStrictEqual(PET_INFORMATION);
   });
 
   afterAll(async () => {
