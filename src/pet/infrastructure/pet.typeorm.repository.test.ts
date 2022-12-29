@@ -7,7 +7,7 @@ import { PetEntity } from './pet.entity';
 import { getPetTestModules } from '../pet.test-module';
 import { PetTypeormRepository } from './pet.typeorm.repository';
 
-describe('PetService', () => {
+describe('PetTypeormRepository', () => {
   let petRepository: PetTypeormRepository;
   let dataSource: DataSource;
 
