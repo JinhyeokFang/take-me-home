@@ -1,15 +1,14 @@
-import { DataSource } from 'typeorm';
 import { Gender } from '../domain/gender';
 import { Information } from '../domain/information';
 import { Pet } from '../domain/pet';
 import { Species } from '../domain/species';
+import { PetTestingModule } from '../pet.test-module';
 import { PetEntity } from './pet.entity';
-import { getPetTestModules } from '../pet.test-module';
 import { PetTypeormRepository } from './pet.typeorm.repository';
 
 describe('PetTypeormRepository', () => {
+  let petModule: PetTestingModule;
   let petRepository: PetTypeormRepository;
-  let dataSource: DataSource;
 
   const PET_INFORMATION: Information = {
     name: 'testPetName',
@@ -24,12 +23,9 @@ describe('PetTypeormRepository', () => {
   };
 
   beforeAll(async () => {
-    const modules = await getPetTestModules();
-    const testModule = modules.testModule;
-    dataSource = modules.dataSource;
-
-    petRepository = testModule.get<PetTypeormRepository>(PetTypeormRepository);
-    await dataSource.getRepository(PetEntity).delete({});
+    petModule = await PetTestingModule.getModule();
+    petRepository = petModule.get<PetTypeormRepository>(PetTypeormRepository);
+    await petModule.dataSource.getRepository(PetEntity).delete({});
   });
 
   it('PetTypeormRepository.save(Pet)', async () => {
@@ -41,6 +37,6 @@ describe('PetTypeormRepository', () => {
   });
 
   afterAll(async () => {
-    await dataSource.destroy();
+    await petModule.dataSource.destroy();
   });
 });

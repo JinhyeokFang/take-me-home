@@ -1,5 +1,6 @@
 import { PetService } from '../business/pet.service';
 import { Gender } from '../domain/gender';
+import { ID } from '../domain/id';
 import { Pet } from '../domain/pet';
 import { Species } from '../domain/species';
 import { PetController } from './pet.controller';
@@ -39,7 +40,7 @@ describe('PetController', () => {
     const pet = new Pet(PET_INFORMATION);
     const mockedFindOneById = jest
       .spyOn(petService, 'findOneById')
-      .mockImplementation(async (id: string) => {
+      .mockImplementation(async (id: ID) => {
         return pet;
       });
     const findPetByIdResult = await petController.findPetById(pet.id);

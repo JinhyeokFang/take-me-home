@@ -4,6 +4,7 @@ import { PetEntity } from './pet.entity';
 import { Injectable } from '@nestjs/common';
 import { Pet } from '../domain/pet';
 import { Repository } from 'typeorm';
+import { ID } from '../domain/id';
 
 @Injectable()
 export class PetTypeormRepository implements PetRepository {
@@ -34,7 +35,7 @@ export class PetTypeormRepository implements PetRepository {
     return petEntity;
   }
 
-  async findOneById(id: string): Promise<Pet> {
+  async findOneById(id: ID): Promise<Pet> {
     const petEntity = await this.petRepository.findOne({
       where: {
         id,

@@ -1,9 +1,10 @@
 import { randomUUID } from 'crypto';
+import { ID } from './id';
 import { Information } from './information';
 
 export class Pet {
   readonly information: Information;
-  readonly id: string;
+  readonly id: ID;
   adoptable = true;
 
   constructor(information: Information, id?: string) {
