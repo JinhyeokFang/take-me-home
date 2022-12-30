@@ -1,10 +1,13 @@
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { PetService } from '../business/pet.service';
 import { Information } from '../domain/information';
 import { Pet } from '../domain/pet';
 
+@Controller('pet')
 export class PetController {
   constructor(private readonly petService: PetService) {}
 
+  @Post('/')
   async createPet(petInformation: Information) {
     const pet = new Pet(petInformation);
     await this.petService.save(pet);
@@ -13,7 +16,8 @@ export class PetController {
     };
   }
 
-  async findPetById(id: string) {
+  @Get('/')
+  async findPetById(@Param('id') id: string) {
     const pet = await this.petService.findOneById(id);
     return {
       success: true,
