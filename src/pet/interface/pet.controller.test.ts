@@ -40,7 +40,7 @@ describe('PetController', () => {
     const pet = new Pet(PET_INFORMATION);
     const mockedFindOneById = jest
       .spyOn(petService, 'findOneById')
-      .mockImplementation(async (id: ID) => {
+      .mockImplementation(async () => {
         return pet;
       });
     const findPetByIdResult = await petController.findPetById(pet.id);

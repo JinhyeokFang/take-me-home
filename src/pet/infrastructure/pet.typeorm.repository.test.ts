@@ -1,13 +1,13 @@
+import { Repository } from 'typeorm';
 import { Gender } from '../domain/gender';
 import { Information } from '../domain/information';
 import { Pet } from '../domain/pet';
 import { Species } from '../domain/species';
-import { PetTestingModule } from '../pet.test-module';
 import { PetEntity } from './pet.entity';
 import { PetTypeormRepository } from './pet.typeorm.repository';
 
 describe('PetTypeormRepository', () => {
-  let petModule: PetTestingModule;
+  let rawRepository: Repository<PetEntity>;
   let petRepository: PetTypeormRepository;
 
   const PET_INFORMATION: Information = {
@@ -23,20 +23,28 @@ describe('PetTypeormRepository', () => {
   };
 
   beforeAll(async () => {
-    petModule = await PetTestingModule.getModule();
-    petRepository = petModule.get<PetTypeormRepository>(PetTypeormRepository);
-    await petModule.dataSource.getRepository(PetEntity).delete({});
+    rawRepository = new Repository<PetEntity>(null, null);
+    petRepository = new PetTypeormRepository(rawRepository);
   });
 
   it('PetTypeormRepository.save(Pet)', async () => {
     const petWillSaved = new Pet(PET_INFORMATION);
+    let savedPetEntity: PetEntity;
+    const mockedSave = jest
+      .spyOn(rawRepository, 'save')
+      .mockImplementation(async (petEntity: PetEntity) => {
+        savedPetEntity = petEntity;
+        return null;
+      });
+    const mockedFindOneById = jest
+      .spyOn(rawRepository, 'findOne')
+      .mockImplementation(async () => {
+        return savedPetEntity;
+      });
     await petRepository.save(petWillSaved);
     const pet = await petRepository.findOneById(petWillSaved.id);
     expect(pet).not.toBe(null);
-    expect(pet.information).toStrictEqual(PET_INFORMATION);
-  });
-
-  afterAll(async () => {
-    await petModule.dataSource.destroy();
+    expect(mockedSave).toBeCalled();
+    expect(mockedFindOneById).toBeCalled();
   });
 });
