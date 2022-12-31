@@ -32,7 +32,7 @@ export class BirthdayTransformer implements ValueTransformer {
 
   private zeroFill(str: string, length: number): string {
     const zeroStringLength = str.length - length;
-    const zeroString = '0'.repeat(zeroStringLength);
+    const zeroString = '0'.repeat(zeroStringLength > 0 ? zeroStringLength : 0);
     return zeroString + str;
   }
 }

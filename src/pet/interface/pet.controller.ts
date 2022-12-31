@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { PetService } from '../business/pet.service';
 import { Information } from '../domain/information';
 import { Pet } from '../domain/pet';
@@ -8,7 +8,7 @@ export class PetController {
   constructor(private readonly petService: PetService) {}
 
   @Post('/')
-  async createPet(petInformation: Information) {
+  async createPet(@Body() petInformation: Information) {
     const pet = new Pet(petInformation);
     await this.petService.save(pet);
     return {
