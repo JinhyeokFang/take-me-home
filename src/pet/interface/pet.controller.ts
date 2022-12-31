@@ -10,6 +10,10 @@ export class PetController {
     await this.petService.save(pet);
     return {
       success: true,
+      pet: {
+        information: pet.information,
+        id: pet.id,
+      },
     };
   }
 

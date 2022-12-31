@@ -33,6 +33,10 @@ describe('PetController', () => {
     const createPetResult = await petController.createPet(PET_INFORMATION);
     expect(createPetResult).toStrictEqual({
       success: true,
+      pet: {
+        information: PET_INFORMATION,
+        id: createPetResult.pet.id,
+      },
     });
   });
 
