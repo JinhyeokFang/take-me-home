@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { testDatabaseConfig } from '../config/test-database.config';
+import { testDatabaseConfig } from '../src/config/test-database.config';
 import { DataSource } from 'typeorm';
-import { PetEntity } from './infrastructure/pet.entity';
-import { PetModule } from './pet.module';
+import { PetEntity } from '../src/pet/infrastructure/pet.entity';
+import { PetModule } from '../src/pet/pet.module';
 
 export class PetTestingModule extends TestingModule {
   public dataSource: DataSource;
