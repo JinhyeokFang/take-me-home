@@ -11,13 +11,6 @@ describe('Pet', () => {
     expect(isEqual).toBe(true);
   });
 
-  it('Pet.adopt()', () => {
-    const pet = new Pet(PET_INFORMATION);
-    expect(pet.adoptable).toBe(true);
-    pet.adopt();
-    expect(pet.adoptable).toBe(false);
-  });
-
   it('Pet.information', () => {
     const pet = new Pet(PET_INFORMATION);
     expect(pet.information).toStrictEqual(PET_INFORMATION);

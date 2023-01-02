@@ -8,10 +8,6 @@ export class Pet {
     this.information = information;
   }
 
-  adopt() {
-    this.adoptable = false;
-  }
-
   equal(anotherPet: Pet) {
     const enumeratedInfo = Object.entries(this.information);
     const subtraction = enumeratedInfo.filter((item) => {
