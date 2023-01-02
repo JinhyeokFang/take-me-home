@@ -1,8 +1,9 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 import { Birthday } from '../domain/pet/information/birthday';
 import { Gender } from '../domain/pet/information/gender';
 import { Species } from '../domain/pet/information/species';
 import { BirthdayTransformer } from './birthday.transformer';
+import { OwnerEntity } from './owner.entity';
 
 @Entity()
 export class PetEntity {
@@ -38,4 +39,7 @@ export class PetEntity {
     transformer: [new BirthdayTransformer()],
   })
   birthday: Birthday;
+
+  @ManyToOne((type) => OwnerEntity, (owner) => owner.pets)
+  owner: OwnerEntity;
 }
