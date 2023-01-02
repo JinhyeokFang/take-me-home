@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { OwnerService } from '../business/owner.service';
 import { Information } from '../domain/information';
 import { Pet } from '../domain/pet';
@@ -15,17 +15,7 @@ export class OwnerController {
       success: true,
       pet: {
         information: pet.information,
-        id: pet.id,
       },
-    };
-  }
-
-  @Get('/')
-  async findPetById(@Param('id') id: string) {
-    const pet = await this.petService.findOneById(id);
-    return {
-      success: true,
-      pet,
     };
   }
 }

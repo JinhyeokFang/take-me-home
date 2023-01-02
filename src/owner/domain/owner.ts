@@ -1,4 +1,3 @@
-import { ID as PetID } from './id';
 import { Pet } from './pet';
 
 export class Owner {
@@ -8,8 +7,8 @@ export class Owner {
     this.pets.push(pet);
   }
 
-  hasPet(id: PetID) {
-    const pet = this.pets.find((pet) => pet.id === id);
+  hasPet(anotherPet: Pet) {
+    const pet = this.pets.find((pet) => pet.equal(anotherPet));
     return pet !== undefined;
   }
 }

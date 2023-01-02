@@ -4,7 +4,6 @@ import { PetEntity } from './pet.entity';
 import { Injectable } from '@nestjs/common';
 import { Pet } from '../domain/pet';
 import { Repository } from 'typeorm';
-import { ID } from '../domain/id';
 
 @Injectable()
 export class PetTypeormRepository implements PetRepository {
@@ -26,23 +25,12 @@ export class PetTypeormRepository implements PetRepository {
     birthday.setFullYear(pet.information.birthday.year);
     birthday.setMonth(pet.information.birthday.month - 1);
     birthday.setDate(pet.information.birthday.day);
-    petEntity.id = pet.id;
     petEntity.name = pet.information.name;
     petEntity.age = pet.information.age;
     petEntity.gender = pet.information.gender;
     petEntity.species = pet.information.species;
     petEntity.birthday = pet.information.birthday;
     return petEntity;
-  }
-
-  async findOneById(id: ID): Promise<Pet> {
-    const petEntity = await this.petRepository.findOne({
-      where: {
-        id,
-      },
-    });
-    const pet = this.convertToDomainPet(petEntity);
-    return pet;
   }
 
   private convertToDomainPet(petEntity: PetEntity): Pet {
@@ -54,7 +42,7 @@ export class PetTypeormRepository implements PetRepository {
       species: petEntity.species,
       birthday: petEntity.birthday,
     };
-    const pet = new Pet(petInformation, petId);
+    const pet = new Pet(petInformation);
     return pet;
   }
 }

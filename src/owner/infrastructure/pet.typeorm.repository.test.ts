@@ -36,15 +36,7 @@ describe('PetTypeormRepository', () => {
         savedPetEntity = petEntity;
         return null;
       });
-    const mockedFindOneById = jest
-      .spyOn(rawRepository, 'findOne')
-      .mockImplementation(async () => {
-        return savedPetEntity;
-      });
     await petRepository.save(petWillSaved);
-    const pet = await petRepository.findOneById(petWillSaved.id);
-    expect(pet).not.toBe(null);
     expect(mockedSave).toBeCalled();
-    expect(mockedFindOneById).toBeCalled();
   });
 });

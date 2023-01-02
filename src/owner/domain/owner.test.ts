@@ -9,7 +9,7 @@ describe('Owner', () => {
     const owner = new Owner();
     const pet = new Pet(PET_INFORMATION);
     owner.adoptPet(pet);
-    const hasPet = owner.hasPet(pet.id);
+    const hasPet = owner.hasPet(pet);
     expect(hasPet).toBe(true);
   });
 });

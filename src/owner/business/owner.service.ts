@@ -9,8 +9,4 @@ export class OwnerService {
   async save(pet: Pet) {
     await this.petRepository.save(pet);
   }
-
-  async findOneById(id: string): Promise<Pet> {
-    return await this.petRepository.findOneById(id);
-  }
 }

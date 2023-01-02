@@ -1,6 +1,5 @@
 import { OwnerService } from '../business/owner.service';
 import { Gender } from '../domain/gender';
-import { ID } from '../domain/id';
 import { Pet } from '../domain/pet';
 import { Species } from '../domain/species';
 import { OwnerController } from './owner.controller';
@@ -35,23 +34,7 @@ describe('OwnerController', () => {
       success: true,
       pet: {
         information: PET_INFORMATION,
-        id: createPetResult.pet.id,
       },
     });
-  });
-
-  it('OwnerController.findPetById()', async () => {
-    const pet = new Pet(PET_INFORMATION);
-    const mockedFindOneById = jest
-      .spyOn(ownerService, 'findOneById')
-      .mockImplementation(async () => {
-        return pet;
-      });
-    const findPetByIdResult = await ownerController.findPetById(pet.id);
-    expect(findPetByIdResult).toStrictEqual({
-      success: true,
-      pet,
-    });
-    expect(mockedFindOneById).toBeCalledWith(pet.id);
   });
 });
