@@ -1,8 +1,8 @@
-import { PetRepository } from '../domain/pet.repository';
+import { PetRepository } from '../domain/pet/pet.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PetEntity } from './pet.entity';
 import { Injectable } from '@nestjs/common';
-import { Pet } from '../domain/pet';
+import { Pet } from '../domain/pet/pet';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -34,7 +34,6 @@ export class PetTypeormRepository implements PetRepository {
   }
 
   private convertToDomainPet(petEntity: PetEntity): Pet {
-    const petId = petEntity.id;
     const petInformation = {
       name: petEntity.name,
       age: petEntity.age,

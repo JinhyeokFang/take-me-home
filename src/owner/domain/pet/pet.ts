@@ -1,8 +1,7 @@
-import { Information } from './information';
+import { Information } from './information/information';
 
 export class Pet {
   readonly information: Information;
-  adoptable = true;
 
   constructor(information: Information) {
     this.information = information;

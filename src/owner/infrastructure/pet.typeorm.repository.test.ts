@@ -1,8 +1,8 @@
 import { Repository } from 'typeorm';
-import { Gender } from '../domain/gender';
-import { Information } from '../domain/information';
-import { Pet } from '../domain/pet';
-import { Species } from '../domain/species';
+import { Gender } from '../domain/pet/information/gender';
+import { Information } from '../domain/pet/information/information';
+import { Pet } from '../domain/pet/pet';
+import { Species } from '../domain/pet/information/species';
 import { PetEntity } from './pet.entity';
 import { PetTypeormRepository } from './pet.typeorm.repository';
 
@@ -29,11 +29,9 @@ describe('PetTypeormRepository', () => {
 
   it('PetTypeormRepository.save(Pet)', async () => {
     const petWillSaved = new Pet(PET_INFORMATION);
-    let savedPetEntity: PetEntity;
     const mockedSave = jest
       .spyOn(rawRepository, 'save')
-      .mockImplementation(async (petEntity: PetEntity) => {
-        savedPetEntity = petEntity;
+      .mockImplementation(async () => {
         return null;
       });
     await petRepository.save(petWillSaved);

@@ -1,5 +1,5 @@
 import { Pet } from './pet';
-import { DUMMY_INFORMATION } from './test-dummy-information';
+import { DUMMY_INFORMATION } from './information/test-dummy-information';
 
 describe('Pet', () => {
   const PET_INFORMATION = DUMMY_INFORMATION;

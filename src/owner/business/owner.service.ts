@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Pet } from '../domain/pet';
+import { Pet } from '../domain/pet/pet';
 import { PetTypeormRepository } from '../infrastructure/pet.typeorm.repository';
 
 @Injectable()

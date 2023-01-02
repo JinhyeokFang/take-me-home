@@ -1,6 +1,6 @@
-import { Pet } from './pet';
-import { DUMMY_INFORMATION } from './test-dummy-information';
+import { Pet } from './pet/pet';
 import { Owner } from './owner';
+import { DUMMY_INFORMATION } from './pet/information/test-dummy-information';
 
 describe('Owner', () => {
   const PET_INFORMATION = DUMMY_INFORMATION;

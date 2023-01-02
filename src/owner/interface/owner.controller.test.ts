@@ -1,7 +1,7 @@
 import { OwnerService } from '../business/owner.service';
-import { Gender } from '../domain/gender';
-import { Pet } from '../domain/pet';
-import { Species } from '../domain/species';
+import { Gender } from '../domain/pet/information/gender';
+import { Species } from '../domain/pet/information/species';
+import { Pet } from '../domain/pet/pet';
 import { OwnerController } from './owner.controller';
 
 describe('OwnerController', () => {

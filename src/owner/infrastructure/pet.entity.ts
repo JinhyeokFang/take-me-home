@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { Birthday } from '../domain/birthday';
-import { Gender } from '../domain/gender';
-import { Species } from '../domain/species';
+import { Birthday } from '../domain/pet/information/birthday';
+import { Gender } from '../domain/pet/information/gender';
+import { Species } from '../domain/pet/information/species';
 import { BirthdayTransformer } from './birthday.transformer';
 
 @Entity()

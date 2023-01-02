@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { OwnerService } from '../business/owner.service';
-import { Information } from '../domain/information';
-import { Pet } from '../domain/pet';
+import { Information } from '../domain/pet/information/information';
+import { Pet } from '../domain/pet/pet';
 
 @Controller('owner')
 export class OwnerController {

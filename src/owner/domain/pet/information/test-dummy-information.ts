@@ -1,7 +1,8 @@
 import { Gender } from './gender';
+import { Information } from './information';
 import { Species } from './species';
 
-export const DUMMY_INFORMATION = {
+export const DUMMY_INFORMATION: Information = {
   name: 'jest',
   age: 1,
   gender: Gender.Male,

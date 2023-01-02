@@ -1,4 +1,4 @@
-import { Pet } from './pet';
+import { Pet } from './pet/pet';
 
 export class Owner {
   private pets: Pet[] = [];

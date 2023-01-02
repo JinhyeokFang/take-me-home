@@ -1,5 +1,5 @@
 import { ValueTransformer } from 'typeorm';
-import { Birthday } from '../domain/birthday';
+import { Birthday } from '../domain/pet/information/birthday';
 
 export class BirthdayTransformer implements ValueTransformer {
   // 0000-00-00
