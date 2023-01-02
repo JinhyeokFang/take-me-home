@@ -3,7 +3,7 @@ import { Pet } from '../domain/pet';
 import { PetTypeormRepository } from '../infrastructure/pet.typeorm.repository';
 
 @Injectable()
-export class PetService {
+export class OwnerService {
   constructor(private readonly petRepository: PetTypeormRepository) {}
 
   async save(pet: Pet) {

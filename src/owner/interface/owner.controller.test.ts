@@ -1,11 +1,11 @@
-import { PetService } from '../business/pet.service';
+import { OwnerService } from '../business/owner.service';
 import { Gender } from '../domain/gender';
 import { ID } from '../domain/id';
 import { Pet } from '../domain/pet';
 import { Species } from '../domain/species';
-import { PetController } from './pet.controller';
+import { OwnerController } from './owner.controller';
 
-describe('PetController', () => {
+describe('OwnerController', () => {
   const PET_INFORMATION = {
     name: 'Name',
     age: 1,
@@ -18,19 +18,19 @@ describe('PetController', () => {
     },
   };
 
-  let petService: PetService;
-  let petController: PetController;
+  let ownerService: OwnerService;
+  let ownerController: OwnerController;
 
   beforeEach(() => {
-    petService = new PetService(null);
-    petController = new PetController(petService);
+    ownerService = new OwnerService(null);
+    ownerController = new OwnerController(ownerService);
   });
 
-  it('PetController.createPet()', async () => {
-    jest.spyOn(petService, 'save').mockImplementation(async (pet: Pet) => {
+  it('OwnerController.createPet()', async () => {
+    jest.spyOn(ownerService, 'save').mockImplementation(async (pet: Pet) => {
       expect(pet.information).toStrictEqual(PET_INFORMATION);
     });
-    const createPetResult = await petController.createPet(PET_INFORMATION);
+    const createPetResult = await ownerController.createPet(PET_INFORMATION);
     expect(createPetResult).toStrictEqual({
       success: true,
       pet: {
@@ -40,14 +40,14 @@ describe('PetController', () => {
     });
   });
 
-  it('PetController.findPetById()', async () => {
+  it('OwnerController.findPetById()', async () => {
     const pet = new Pet(PET_INFORMATION);
     const mockedFindOneById = jest
-      .spyOn(petService, 'findOneById')
+      .spyOn(ownerService, 'findOneById')
       .mockImplementation(async () => {
         return pet;
       });
-    const findPetByIdResult = await petController.findPetById(pet.id);
+    const findPetByIdResult = await ownerController.findPetById(pet.id);
     expect(findPetByIdResult).toStrictEqual({
       success: true,
       pet,

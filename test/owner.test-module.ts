@@ -2,15 +2,15 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { testDatabaseConfig } from '../src/config/test-database.config';
 import { DataSource } from 'typeorm';
-import { PetEntity } from '../src/pet/infrastructure/pet.entity';
-import { PetModule } from '../src/pet/pet.module';
+import { PetEntity } from '../src/owner/infrastructure/pet.entity';
+import { OwnerModule } from '../src/owner/owner.module';
 
-export class PetTestingModule extends TestingModule {
+export class OwnerTestingModule extends TestingModule {
   public dataSource: DataSource;
 
-  static async getModule(): Promise<PetTestingModule> {
+  static async getModule(): Promise<OwnerTestingModule> {
     let dataSource: DataSource;
-    const metaData = PetModule.metaData;
+    const metaData = OwnerModule.metaData;
     metaData.imports.push(
       TypeOrmModule.forRootAsync({
         useFactory: () => testDatabaseConfig([PetEntity]),
@@ -21,7 +21,8 @@ export class PetTestingModule extends TestingModule {
       }),
     );
     const testModuleBuilder = Test.createTestingModule(metaData);
-    const testModule = (await testModuleBuilder.compile()) as PetTestingModule;
+    const testModule =
+      (await testModuleBuilder.compile()) as OwnerTestingModule;
     testModule.dataSource = dataSource;
     return testModule;
   }

@@ -1,17 +1,14 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { PetTestingModule } from './pet.test-module';
-import { Gender } from 'src/pet/domain/gender';
-import { Species } from 'src/pet/domain/species';
+import { OwnerTestingModule } from './owner.test-module';
 
-describe('PetController (e2e)', () => {
+describe('OwnerController (e2e)', () => {
   let app: INestApplication;
-  let petModule: PetTestingModule;
+  let ownerModule: OwnerTestingModule;
 
   beforeEach(async () => {
-    petModule = await PetTestingModule.getModule();
-    app = petModule.createNestApplication();
+    ownerModule = await OwnerTestingModule.getModule();
+    app = ownerModule.createNestApplication();
     await app.init();
   });
 
@@ -33,6 +30,6 @@ describe('PetController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await petModule.dataSource.destroy();
+    await ownerModule.dataSource.destroy();
   });
 });

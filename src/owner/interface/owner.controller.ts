@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { PetService } from '../business/pet.service';
+import { OwnerService } from '../business/owner.service';
 import { Information } from '../domain/information';
 import { Pet } from '../domain/pet';
 
-@Controller('pet')
-export class PetController {
-  constructor(private readonly petService: PetService) {}
+@Controller('owner')
+export class OwnerController {
+  constructor(private readonly petService: OwnerService) {}
 
   @Post('/')
   async createPet(@Body() petInformation: Information) {

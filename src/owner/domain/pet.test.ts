@@ -1,19 +1,8 @@
 import { Pet } from './pet';
-import { Gender } from './gender';
-import { Species } from './species';
+import { DUMMY_INFORMATION } from './test-dummy-information';
 
 describe('Pet', () => {
-  const PET_INFORMATION = {
-    name: 'jest',
-    age: 1,
-    gender: Gender.Male,
-    birthday: {
-      year: 2022,
-      month: 12,
-      day: 17,
-    },
-    species: Species.Dog,
-  };
+  const PET_INFORMATION = DUMMY_INFORMATION;
 
   it('Pet.id', () => {
     const pet = new Pet(PET_INFORMATION);
