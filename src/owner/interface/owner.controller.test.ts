@@ -1,22 +1,8 @@
 import { OwnerService } from '../business/owner.service';
-import { Gender } from '../domain/pet/information/gender';
-import { Species } from '../domain/pet/information/species';
-import { Pet } from '../domain/pet/pet';
+import { Owner } from '../domain/owner';
 import { OwnerController } from './owner.controller';
 
 describe('OwnerController', () => {
-  const PET_INFORMATION = {
-    name: 'Name',
-    age: 1,
-    species: Species.Cat,
-    gender: Gender.Female,
-    birthday: {
-      year: 1,
-      month: 1,
-      day: 1,
-    },
-  };
-
   let ownerService: OwnerService;
   let ownerController: OwnerController;
 
@@ -25,16 +11,28 @@ describe('OwnerController', () => {
     ownerController = new OwnerController(ownerService);
   });
 
-  it('OwnerController.createPet()', async () => {
-    jest.spyOn(ownerService, 'save').mockImplementation(async (pet: Pet) => {
-      expect(pet.information).toStrictEqual(PET_INFORMATION);
+  it('OwnerController.createOwner()', async () => {
+    jest.spyOn(ownerService, 'save').mockImplementation(async () => {
+      return;
     });
-    const createPetResult = await ownerController.createPet(PET_INFORMATION);
-    expect(createPetResult).toStrictEqual({
+    const createOwnerResult = await ownerController.createOwner();
+    expect(createOwnerResult).toStrictEqual({
       success: true,
-      pet: {
-        information: PET_INFORMATION,
+      owner: {
+        pets: [],
       },
+    });
+  });
+
+  it('OwnerController.findOne()', async () => {
+    const owner = new Owner();
+    jest.spyOn(ownerService, 'findOne').mockImplementation(async () => {
+      return owner;
+    });
+    const findOneResult = await ownerController.findOne('1');
+    expect(findOneResult).toStrictEqual({
+      success: true,
+      owner,
     });
   });
 });

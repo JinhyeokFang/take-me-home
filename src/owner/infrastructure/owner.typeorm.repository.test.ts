@@ -4,6 +4,7 @@ import { Owner } from '../domain/owner';
 import { DUMMY_INFORMATION } from '../domain/pet/information/test-dummy-information';
 import { OwnerEntity } from './owner.entity';
 import { OwnerTypeormRepository } from './owner.typeorm.repository';
+import { PetEntity } from './pet.entity';
 
 describe('OwnerTypeormRepository', () => {
   let rawRepository: Repository<OwnerEntity>;
@@ -25,7 +26,17 @@ describe('OwnerTypeormRepository', () => {
       .mockImplementation(async () => {
         return null;
       });
+    const mockedFindOne = jest
+      .spyOn(rawRepository, 'findOne')
+      .mockImplementation(async () => {
+        const ownerEntity = new OwnerEntity();
+        ownerEntity.id = owner.id;
+        ownerEntity.pets = [];
+        return ownerEntity;
+      });
     await ownerRepository.save(owner);
+    await ownerRepository.findOneById(owner.id);
     expect(mockedSave).toBeCalled();
+    expect(mockedFindOne).toBeCalled();
   });
 });

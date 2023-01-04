@@ -1,21 +1,29 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Controller, Get, Post } from '@nestjs/common';
 import { OwnerService } from '../business/owner.service';
-import { Information } from '../domain/pet/information/information';
-import { Pet } from '../domain/pet/pet';
+import { Owner } from '../domain/owner';
 
 @Controller('owner')
 export class OwnerController {
-  constructor(private readonly petService: OwnerService) {}
+  constructor(private readonly ownerService: OwnerService) {}
 
   @Post('/')
-  async createPet(@Body() petInformation: Information) {
-    const pet = new Pet(petInformation);
-    await this.petService.save(pet);
+  async createOwner() {
+    const owner = new Owner();
+    await this.ownerService.save(owner);
     return {
       success: true,
-      pet: {
-        information: pet.information,
+      owner: {
+        pets: owner.getPetLists(),
       },
+    };
+  }
+
+  @Get('/:id')
+  async findOne(id: string) {
+    const owner = await this.ownerService.findOne(id);
+    return {
+      success: true,
+      owner,
     };
   }
 }

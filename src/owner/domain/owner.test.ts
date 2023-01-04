@@ -12,4 +12,11 @@ describe('Owner', () => {
     const hasPet = owner.hasPet(pet);
     expect(hasPet).toBe(true);
   });
+
+  it('Owner.id', () => {
+    const owner = new Owner();
+    const anotherOwner = new Owner();
+    const isSameId = owner.id === anotherOwner.id;
+    expect(isSameId).toBe(false);
+  });
 });
