@@ -4,6 +4,7 @@ import { testDatabaseConfig } from '../src/config/test-database.config';
 import { DataSource } from 'typeorm';
 import { PetEntity } from '../src/owner/infrastructure/pet.entity';
 import { OwnerModule } from '../src/owner/owner.module';
+import { OwnerEntity } from '../src/owner/infrastructure/owner.entity';
 
 export class OwnerTestingModule extends TestingModule {
   public dataSource: DataSource;
@@ -13,7 +14,7 @@ export class OwnerTestingModule extends TestingModule {
     const metaData = OwnerModule.metaData;
     metaData.imports.push(
       TypeOrmModule.forRootAsync({
-        useFactory: () => testDatabaseConfig([PetEntity]),
+        useFactory: () => testDatabaseConfig([PetEntity, OwnerEntity]),
         dataSourceFactory: async (option) => {
           dataSource = new DataSource(option);
           return await dataSource.initialize();

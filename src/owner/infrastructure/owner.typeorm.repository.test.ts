@@ -4,7 +4,7 @@ import { Owner } from '../domain/owner';
 import { DUMMY_INFORMATION } from '../domain/pet/information/test-dummy-information';
 import { OwnerEntity } from './owner.entity';
 import { OwnerTypeormRepository } from './owner.typeorm.repository';
-import { PetEntity } from './pet.entity';
+import { OwnerEntityConverter } from './owner.entity.converter';
 
 describe('OwnerTypeormRepository', () => {
   let rawRepository: Repository<OwnerEntity>;
@@ -20,7 +20,6 @@ describe('OwnerTypeormRepository', () => {
   it('OwnerTypeormRepository.save(Owner)', async () => {
     const pet = new Pet(PET_INFORMATION);
     const owner = new Owner();
-    owner.adoptPet(pet);
     const mockedSave = jest
       .spyOn(rawRepository, 'save')
       .mockImplementation(async () => {
@@ -29,14 +28,23 @@ describe('OwnerTypeormRepository', () => {
     const mockedFindOne = jest
       .spyOn(rawRepository, 'findOne')
       .mockImplementation(async () => {
-        const ownerEntity = new OwnerEntity();
-        ownerEntity.id = owner.id;
-        ownerEntity.pets = [];
-        return ownerEntity;
+        return OwnerEntityConverter.ownerToOwnerEntity(owner);
       });
     await ownerRepository.save(owner);
-    await ownerRepository.findOneById(owner.id);
+    const ownerFromQuery = await ownerRepository.findOneById(owner.id);
+    const isIdEqual = owner.id === ownerFromQuery.id;
+    const ownerPetList = owner.getPetLists();
+    const ownerFromQueryPetList = ownerFromQuery.getPetLists();
     expect(mockedSave).toBeCalled();
     expect(mockedFindOne).toBeCalled();
+    expect(isIdEqual).toBe(true);
+    expect(ownerPetList).toStrictEqual(ownerFromQueryPetList);
+
+    owner.adoptPet(pet);
+    await ownerRepository.save(owner);
+    const ownerFromQuery2 = await ownerRepository.findOneById(owner.id);
+    const ownerPetList2 = owner.getPetLists();
+    const ownerFromQueryPetList2 = ownerFromQuery2.getPetLists();
+    expect(ownerPetList2).toStrictEqual(ownerFromQueryPetList2);
   });
 });

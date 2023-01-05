@@ -15,7 +15,7 @@ export class Owner {
   }
 
   hasPet(anotherPet: Pet) {
-    const pet = this.pets.find((pet) => pet.equal(anotherPet));
+    const pet = this.pets.find((pet) => pet.id === anotherPet.id);
     return pet !== undefined;
   }
 

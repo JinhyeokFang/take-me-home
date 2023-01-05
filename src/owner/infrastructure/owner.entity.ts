@@ -6,6 +6,6 @@ export class OwnerEntity {
   @PrimaryColumn()
   id: string;
 
-  @OneToMany((type) => PetEntity, (pet) => pet.owner)
+  @OneToMany(() => PetEntity, (pet) => pet.owner)
   pets: PetEntity[];
 }

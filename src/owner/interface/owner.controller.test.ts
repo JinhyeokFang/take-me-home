@@ -19,6 +19,7 @@ describe('OwnerController', () => {
     expect(createOwnerResult).toStrictEqual({
       success: true,
       owner: {
+        id: createOwnerResult.owner.id,
         pets: [],
       },
     });

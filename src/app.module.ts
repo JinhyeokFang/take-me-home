@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PetModule } from './pet/pet.module';
+import { OwnerEntity } from './owner/infrastructure/owner.entity';
+import { PetEntity } from './owner/infrastructure/pet.entity';
+import { OwnerModule } from './owner/owner.module';
 
 @Module({
   imports: [
-    PetModule,
+    OwnerModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -12,7 +14,7 @@ import { PetModule } from './pet/pet.module';
       username: 'root',
       password: 'root',
       database: 'test',
-      entities: [],
+      entities: [OwnerEntity, PetEntity],
       synchronize: true,
     }),
   ],

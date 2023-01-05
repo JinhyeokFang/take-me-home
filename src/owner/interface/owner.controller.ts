@@ -13,6 +13,7 @@ export class OwnerController {
     return {
       success: true,
       owner: {
+        id: owner.id,
         pets: owner.getPetLists(),
       },
     };

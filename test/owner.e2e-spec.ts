@@ -1,4 +1,7 @@
 import { INestApplication } from '@nestjs/common';
+import { Owner } from '../src/owner/domain/owner';
+import { DUMMY_INFORMATION } from '../src/owner/domain/pet/information/test-dummy-information';
+import { Pet } from '../src/owner/domain/pet/pet';
 import * as request from 'supertest';
 import { OwnerTestingModule } from './owner.test-module';
 
@@ -12,21 +15,28 @@ describe('OwnerController (e2e)', () => {
     await app.init();
   });
 
-  it('/pet (POST)', () => {
-    return request(app.getHttpServer())
-      .post('/pet')
+  it('/owner (POST)', () => {
+    return request(app.getHttpServer()).post('/owner').send({}).expect(201);
+  });
+
+  it('/:id (GET)', async () => {
+    const saveRequest = await request(app.getHttpServer())
+      .post('/owner')
+      .send({});
+    const ownerId = saveRequest.body.owner.id;
+    console.log(ownerId);
+    const pet = new Pet(DUMMY_INFORMATION);
+    await request(app.getHttpServer())
+      .patch('/owner/' + ownerId)
       .send({
-        name: 'Name',
-        age: 1,
-        gender: 0,
-        species: 0,
-        birthday: {
-          year: 2022,
-          month: 2,
-          day: 2,
-        },
-      })
-      .expect(201);
+        id: ownerId,
+        pet: [pet.information],
+      });
+    const req = await request(app.getHttpServer())
+      .get(`/owner/${ownerId}`)
+      .expect(200);
+    console.log(req.body);
+    return request(app.getHttpServer()).get(`/owner/${ownerId}`).expect(200);
   });
 
   afterAll(async () => {

@@ -40,6 +40,6 @@ export class PetEntity {
   })
   birthday: Birthday;
 
-  @ManyToOne((type) => OwnerEntity, (owner) => owner.pets)
+  @ManyToOne(() => OwnerEntity, (owner) => owner.pets)
   owner: OwnerEntity;
 }
