@@ -30,21 +30,17 @@ describe('OwnerTypeormRepository', () => {
       .mockImplementation(async () => {
         return OwnerEntityConverter.ownerToOwnerEntity(owner);
       });
+    owner.adoptPet(pet);
+
     await ownerRepository.save(owner);
     const ownerFromQuery = await ownerRepository.findOneById(owner.id);
     const isIdEqual = owner.id === ownerFromQuery.id;
     const ownerPetList = owner.getPetLists();
     const ownerFromQueryPetList = ownerFromQuery.getPetLists();
+
     expect(mockedSave).toBeCalled();
     expect(mockedFindOne).toBeCalled();
     expect(isIdEqual).toBe(true);
     expect(ownerPetList).toStrictEqual(ownerFromQueryPetList);
-
-    owner.adoptPet(pet);
-    await ownerRepository.save(owner);
-    const ownerFromQuery2 = await ownerRepository.findOneById(owner.id);
-    const ownerPetList2 = owner.getPetLists();
-    const ownerFromQueryPetList2 = ownerFromQuery2.getPetLists();
-    expect(ownerPetList2).toStrictEqual(ownerFromQueryPetList2);
   });
 });

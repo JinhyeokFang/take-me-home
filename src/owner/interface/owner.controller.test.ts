@@ -1,4 +1,5 @@
 import { OwnerService } from '../business/owner.service';
+import { ID } from '../domain/id';
 import { Owner } from '../domain/owner';
 import { OwnerController } from './owner.controller';
 
@@ -35,5 +36,20 @@ describe('OwnerController', () => {
       success: true,
       owner,
     });
+  });
+
+  it('OwnerController.addPet()', async () => {
+    const mockedAddPet = jest
+      .spyOn(ownerService, 'addPet')
+      .mockImplementation(async (id: ID) => {
+        expect(id).toBe('1');
+        return new Owner();
+      });
+
+    await ownerController.addPet('1', {
+      pets: [],
+    });
+
+    expect(mockedAddPet).toBeCalled();
   });
 });

@@ -16,6 +16,13 @@ export class BirthdayTransformer implements ValueTransformer {
   }
 
   from(value: string): Birthday {
+    if (value == null) {
+      return {
+        year: 0,
+        month: 0,
+        day: 0,
+      };
+    }
     const splitedStrings = value.split('-');
     const year = parseInt(splitedStrings[0]);
     const month = parseInt(splitedStrings[1]);

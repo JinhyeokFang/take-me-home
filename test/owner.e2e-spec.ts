@@ -1,5 +1,4 @@
 import { INestApplication } from '@nestjs/common';
-import { Owner } from '../src/owner/domain/owner';
 import { DUMMY_INFORMATION } from '../src/owner/domain/pet/information/test-dummy-information';
 import { Pet } from '../src/owner/domain/pet/pet';
 import * as request from 'supertest';
@@ -24,22 +23,28 @@ describe('OwnerController (e2e)', () => {
       .post('/owner')
       .send({});
     const ownerId = saveRequest.body.owner.id;
-    console.log(ownerId);
-    const pet = new Pet(DUMMY_INFORMATION);
-    await request(app.getHttpServer())
-      .patch('/owner/' + ownerId)
-      .send({
-        id: ownerId,
-        pet: [pet.information],
-      });
-    const req = await request(app.getHttpServer())
-      .get(`/owner/${ownerId}`)
-      .expect(200);
-    console.log(req.body);
     return request(app.getHttpServer()).get(`/owner/${ownerId}`).expect(200);
   });
 
+  it('/:id (PUT)', async () => {
+    const saveRequest = await request(app.getHttpServer())
+      .post('/owner')
+      .send({});
+    const ownerId = saveRequest.body.owner.id;
+    const pet = new Pet(DUMMY_INFORMATION);
+
+    const response = await request(app.getHttpServer())
+      .put('/owner/' + ownerId)
+      .send({
+        pets: [pet],
+      });
+
+    expect(response.body.owner.pets.find((p) => p.id === pet.id)).not.toBe(
+      undefined,
+    );
+  });
+
   afterAll(async () => {
-    await ownerModule.dataSource.destroy();
+    await app.close();
   });
 });

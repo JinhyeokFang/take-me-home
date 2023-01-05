@@ -1,4 +1,5 @@
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { ID } from '../domain/id';
 import { Birthday } from '../domain/pet/information/birthday';
 import { Gender } from '../domain/pet/information/gender';
 import { Species } from '../domain/pet/information/species';
@@ -41,5 +42,9 @@ export class PetEntity {
   birthday: Birthday;
 
   @ManyToOne(() => OwnerEntity, (owner) => owner.pets)
+  @JoinColumn([{ name: 'owner_id', referencedColumnName: 'id' }])
   owner: OwnerEntity;
+
+  @Column()
+  owner_id: ID;
 }
