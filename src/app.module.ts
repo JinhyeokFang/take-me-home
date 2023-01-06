@@ -1,4 +1,4 @@
-import { INestApplication, Module, ModuleMetadata } from '@nestjs/common';
+import { Module, ModuleMetadata } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DatabaseModule } from './module/database.module';
@@ -13,7 +13,7 @@ export class AppModule {
     imports: [
       OwnerModule,
       EnvConfigModule.getModule(),
-      DatabaseModule.getModule([OwnerEntity, PetEntity]),
+      DatabaseModule.getModule(),
     ],
     controllers: [],
     providers: [],
