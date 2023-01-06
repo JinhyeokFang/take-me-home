@@ -1,11 +1,12 @@
 import { Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { ID } from '../domain/id';
 import { Owner } from '../domain/owner';
 import { PetEntity } from './pet.entity';
 
 @Entity()
 export class OwnerEntity {
   @PrimaryColumn()
-  id: string;
+  id: ID;
 
   @OneToMany(() => PetEntity, (pet) => pet.owner, {
     eager: true,

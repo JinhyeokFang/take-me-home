@@ -1,5 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { ID } from '../domain/id';
+import { ID } from '../domain/pet/id';
+import { ID as OwnerID } from '../domain/id';
 import { Birthday } from '../domain/pet/information/birthday';
 import { Gender } from '../domain/pet/information/gender';
 import { Species } from '../domain/pet/information/species';
@@ -10,7 +11,7 @@ import { OwnerEntity } from './owner.entity';
 @Entity()
 export class PetEntity {
   @PrimaryColumn()
-  id: string;
+  id: ID;
 
   @Column({
     default: '',
@@ -47,7 +48,7 @@ export class PetEntity {
   owner: OwnerEntity;
 
   @Column()
-  owner_id: ID;
+  owner_id: OwnerID;
 
   static create(pet: Pet) {
     const petEntity = new PetEntity();
