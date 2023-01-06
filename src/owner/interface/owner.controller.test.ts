@@ -29,8 +29,8 @@ describe('OwnerController', () => {
       });
     mockedAddPet = jest
       .spyOn(ownerService, 'addPet')
-      .mockImplementation(async (id: ID) => {
-        expect(id).toBe('1');
+      .mockImplementation(async (dto) => {
+        expect(dto.id).toBe('1');
         return new Owner();
       });
   });

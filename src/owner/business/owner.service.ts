@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { ID } from '../domain/id';
-import { Owner } from '../domain/owner';
 import { OwnerRepository } from '../domain/owner.repository';
-import { Pet } from '../domain/pet/pet';
 import { OwnerMysqlRepository } from '../infrastructure/owner.mysql.repository';
+import { AddPetDTO } from './dto/add-pet.dto';
+import { FindOneDTO } from './dto/find-one.dto';
+import { SaveDTO } from './dto/save.dto';
 
 @Injectable()
 export class OwnerService {
@@ -13,17 +13,17 @@ export class OwnerService {
     this.ownerRepository = ownerRepository;
   }
 
-  async save(owner: Owner) {
-    await this.ownerRepository.save(owner);
+  async save(dto: SaveDTO) {
+    await this.ownerRepository.save(dto.owner);
   }
 
-  async findOne(id: ID) {
-    return await this.ownerRepository.findOneById(id);
+  async findOne(dto: FindOneDTO) {
+    return await this.ownerRepository.findOneById(dto.id);
   }
 
-  async addPet(id: ID, pets: Pet[]) {
-    const owner = await this.ownerRepository.findOneById(id);
-    for (const pet of pets) {
+  async addPet(dto: AddPetDTO) {
+    const owner = await this.ownerRepository.findOneById(dto.id);
+    for (const pet of dto.pets) {
       owner.adoptPet(pet);
     }
     return await this.ownerRepository.save(owner);

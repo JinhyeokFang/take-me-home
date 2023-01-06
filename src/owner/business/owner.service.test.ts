@@ -28,17 +28,27 @@ describe('OwnerService', () => {
 
   it('OwnerService.save()', async () => {
     const owner = new Owner();
-    await ownerService.save(owner);
+    await ownerService.save({
+      owner,
+    });
+
     expect(mockedSave).toBeCalled();
   });
 
   it('OwnerService.findOne()', async () => {
-    await ownerService.findOne(null);
+    await ownerService.findOne({
+      id: '',
+    });
+
     expect(mockedFindOneById).toBeCalled();
   });
 
   it('OwnerService.addPet()', async () => {
-    await ownerService.addPet(null, []);
+    await ownerService.addPet({
+      id: '',
+      pets: [],
+    });
+
     expect(mockedSave).toBeCalled();
     expect(mockedFindOneById).toBeCalledTimes(1);
   });
