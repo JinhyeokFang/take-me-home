@@ -1,5 +1,4 @@
 import { OwnerService } from '../business/owner.service';
-import { ID } from '../domain/id';
 import { Owner } from '../domain/owner';
 import { OwnerController } from './owner.controller';
 

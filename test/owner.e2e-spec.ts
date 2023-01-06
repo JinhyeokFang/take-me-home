@@ -2,15 +2,13 @@ import { INestApplication } from '@nestjs/common';
 import { DUMMY_INFORMATION } from '../src/owner/domain/pet/information/test-dummy-information';
 import { Pet } from '../src/owner/domain/pet/pet';
 import * as request from 'supertest';
-import { OwnerTestingModule } from './owner.test-module';
+import { TestModule } from './test.module';
 
 describe('OwnerController (e2e)', () => {
   let app: INestApplication;
-  let ownerModule: OwnerTestingModule;
 
   beforeEach(async () => {
-    ownerModule = await OwnerTestingModule.getModule();
-    app = ownerModule.createNestApplication();
+    app = (await TestModule.getModule()).createNestApplication();
     await app.init();
   });
 

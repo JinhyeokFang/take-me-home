@@ -13,7 +13,7 @@ export class BirthdayTransformer implements ValueTransformer {
 
   from(value: string): Birthday {
     if (value == null) {
-      throw new Error('value is null');
+      return null;
     }
 
     const splitedStrings = value.split('-');
