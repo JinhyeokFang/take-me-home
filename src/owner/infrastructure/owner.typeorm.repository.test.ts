@@ -4,7 +4,6 @@ import { Owner } from '../domain/owner';
 import { DUMMY_INFORMATION } from '../domain/pet/information/test-dummy-information';
 import { OwnerEntity } from './owner.entity';
 import { OwnerTypeormRepository } from './owner.typeorm.repository';
-import { OwnerEntityConverter } from './owner.entity.converter';
 
 describe('OwnerTypeormRepository', () => {
   let rawRepository: Repository<OwnerEntity>;
@@ -28,7 +27,7 @@ describe('OwnerTypeormRepository', () => {
     const mockedFindOne = jest
       .spyOn(rawRepository, 'findOne')
       .mockImplementation(async () => {
-        return OwnerEntityConverter.ownerToOwnerEntity(owner);
+        return OwnerEntity.create(owner);
       });
     owner.adoptPet(pet);
 

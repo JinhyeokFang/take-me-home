@@ -5,7 +5,6 @@ import { ID } from '../domain/id';
 import { Owner } from '../domain/owner';
 import { OwnerRepository } from '../domain/owner.repository';
 import { OwnerEntity } from './owner.entity';
-import { OwnerEntityConverter } from './owner.entity.converter';
 
 @Injectable()
 export class OwnerTypeormRepository implements OwnerRepository {
@@ -15,7 +14,7 @@ export class OwnerTypeormRepository implements OwnerRepository {
   ) {}
 
   async save(owner: Owner): Promise<void> {
-    const ownerEntity = OwnerEntityConverter.ownerToOwnerEntity(owner);
+    const ownerEntity = OwnerEntity.create(owner);
     await this.rawOwnerRepo.save(ownerEntity);
     return;
   }
@@ -24,7 +23,7 @@ export class OwnerTypeormRepository implements OwnerRepository {
     const ownerEntity = await this.rawOwnerRepo.findOne({
       where: { id },
     });
-    const owner = OwnerEntityConverter.ownerEntityToOwner(ownerEntity);
+    const owner = OwnerEntity.toDomain(ownerEntity);
     return owner;
   }
 }
