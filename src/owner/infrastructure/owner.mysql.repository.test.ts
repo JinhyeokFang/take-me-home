@@ -9,6 +9,10 @@ describe('OwnerMysqlRepository', () => {
   let rawRepository: Repository<OwnerEntity>;
   let ownerRepository: OwnerMysqlRepository;
 
+  let owner: Owner;
+  let mockedSave: jest.SpyInstance;
+  let mockedFindOneById: jest.SpyInstance;
+
   const PET_INFORMATION = DUMMY_INFORMATION;
 
   beforeAll(async () => {
@@ -16,30 +20,30 @@ describe('OwnerMysqlRepository', () => {
     ownerRepository = new OwnerMysqlRepository(rawRepository);
   });
 
-  it('OwnerMysqlRepository.save(Owner)', async () => {
-    const pet = new Pet(PET_INFORMATION);
-    const owner = new Owner();
-    const mockedSave = jest
+  beforeEach(async () => {
+    owner = new Owner();
+    mockedSave = jest
       .spyOn(rawRepository, 'save')
       .mockImplementation(async () => {
         return OwnerEntity.create(owner);
       });
-    const mockedFindOne = jest
+    mockedFindOneById = jest
       .spyOn(rawRepository, 'findOne')
       .mockImplementation(async () => {
         return OwnerEntity.create(owner);
       });
+  });
+
+  it('OwnerMysqlRepository.save(Owner)', async () => {
+    const pet = new Pet(PET_INFORMATION);
     owner.adoptPet(pet);
 
     await ownerRepository.save(owner);
     const ownerFromQuery = await ownerRepository.findOneById(owner.id);
-    const isIdEqual = owner.id === ownerFromQuery.id;
-    const ownerPetList = owner.getPetLists();
-    const ownerFromQueryPetList = ownerFromQuery.getPetLists();
 
     expect(mockedSave).toBeCalled();
-    expect(mockedFindOne).toBeCalled();
-    expect(isIdEqual).toBe(true);
-    expect(ownerPetList).toStrictEqual(ownerFromQueryPetList);
+    expect(mockedFindOneById).toBeCalled();
+    expect(owner.id === ownerFromQuery.id).toBe(true);
+    expect(owner.getPetLists()).toStrictEqual(ownerFromQuery.getPetLists());
   });
 });
