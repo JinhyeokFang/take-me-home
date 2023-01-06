@@ -40,6 +40,6 @@ describe('OwnerService', () => {
   it('OwnerService.addPet()', async () => {
     await ownerService.addPet(null, []);
     expect(mockedSave).toBeCalled();
-    expect(mockedFindOneById).toBeCalled();
+    expect(mockedFindOneById).toBeCalledTimes(1);
   });
 });

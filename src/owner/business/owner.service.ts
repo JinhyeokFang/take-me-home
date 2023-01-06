@@ -26,7 +26,6 @@ export class OwnerService {
     for (const pet of pets) {
       owner.adoptPet(pet);
     }
-    await this.ownerRepository.save(owner);
-    return await this.ownerRepository.findOneById(id);
+    return await this.ownerRepository.save(owner);
   }
 }

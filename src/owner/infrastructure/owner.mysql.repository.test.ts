@@ -22,7 +22,7 @@ describe('OwnerMysqlRepository', () => {
     const mockedSave = jest
       .spyOn(rawRepository, 'save')
       .mockImplementation(async () => {
-        return null;
+        return OwnerEntity.create(owner);
       });
     const mockedFindOne = jest
       .spyOn(rawRepository, 'findOne')

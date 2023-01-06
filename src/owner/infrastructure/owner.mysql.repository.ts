@@ -13,10 +13,10 @@ export class OwnerMysqlRepository implements OwnerRepository {
     private readonly rawOwnerRepo: Repository<OwnerEntity>,
   ) {}
 
-  async save(owner: Owner): Promise<void> {
+  async save(owner: Owner): Promise<Owner> {
     const ownerEntity = OwnerEntity.create(owner);
-    await this.rawOwnerRepo.save(ownerEntity);
-    return;
+    const saved = await this.rawOwnerRepo.save(ownerEntity);
+    return OwnerEntity.toDomain(saved);
   }
 
   async findOneById(id: ID): Promise<Owner> {
