@@ -7,7 +7,7 @@ import { OwnerRepository } from '../domain/owner.repository';
 import { OwnerEntity } from './owner.entity';
 
 @Injectable()
-export class OwnerTypeormRepository implements OwnerRepository {
+export class OwnerMysqlRepository implements OwnerRepository {
   constructor(
     @InjectRepository(OwnerEntity)
     private readonly rawOwnerRepo: Repository<OwnerEntity>,

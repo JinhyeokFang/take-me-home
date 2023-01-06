@@ -1,12 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { ID } from '../domain/id';
 import { Owner } from '../domain/owner';
+import { OwnerRepository } from '../domain/owner.repository';
 import { Pet } from '../domain/pet/pet';
-import { OwnerTypeormRepository } from '../infrastructure/owner.typeorm.repository';
+import { OwnerMysqlRepository } from '../infrastructure/owner.mysql.repository';
 
 @Injectable()
 export class OwnerService {
-  constructor(private readonly ownerRepository: OwnerTypeormRepository) {}
+  private ownerRepository: OwnerRepository;
+
+  constructor(ownerRepository: OwnerMysqlRepository) {
+    this.ownerRepository = ownerRepository;
+  }
 
   async save(owner: Owner) {
     await this.ownerRepository.save(owner);

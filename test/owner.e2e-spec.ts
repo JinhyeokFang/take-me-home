@@ -14,11 +14,11 @@ describe('OwnerController (e2e)', () => {
     await app.init();
   });
 
-  it('/owner (POST)', () => {
+  it('/owner (POST)', async () => {
     return request(app.getHttpServer()).post('/owner').send({}).expect(201);
   });
 
-  it('/:id (GET)', async () => {
+  it('/owner/:id (GET)', async () => {
     const saveRequest = await request(app.getHttpServer())
       .post('/owner')
       .send({});
@@ -26,7 +26,7 @@ describe('OwnerController (e2e)', () => {
     return request(app.getHttpServer()).get(`/owner/${ownerId}`).expect(200);
   });
 
-  it('/:id (PUT)', async () => {
+  it('/owner/:id (PUT)', async () => {
     const saveRequest = await request(app.getHttpServer())
       .post('/owner')
       .send({});
@@ -44,7 +44,7 @@ describe('OwnerController (e2e)', () => {
     );
   });
 
-  afterAll(async () => {
+  afterEach(async () => {
     await app.close();
   });
 });

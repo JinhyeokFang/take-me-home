@@ -2,7 +2,7 @@ import { Module, ModuleMetadata } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OwnerService } from './business/owner.service';
 import { OwnerEntity } from './infrastructure/owner.entity';
-import { OwnerTypeormRepository } from './infrastructure/owner.typeorm.repository';
+import { OwnerMysqlRepository } from './infrastructure/owner.mysql.repository';
 import { PetEntity } from './infrastructure/pet.entity';
 import { OwnerController } from './interface/owner.controller';
 
@@ -10,7 +10,7 @@ import { OwnerController } from './interface/owner.controller';
 export class OwnerModule {
   public static metaData: ModuleMetadata = {
     controllers: [OwnerController],
-    providers: [OwnerService, OwnerTypeormRepository],
+    providers: [OwnerService, OwnerMysqlRepository],
     imports: [TypeOrmModule.forFeature([PetEntity, OwnerEntity])],
   };
 }

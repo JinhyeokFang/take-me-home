@@ -3,20 +3,20 @@ import { Pet } from '../domain/pet/pet';
 import { Owner } from '../domain/owner';
 import { DUMMY_INFORMATION } from '../domain/pet/information/test-dummy-information';
 import { OwnerEntity } from './owner.entity';
-import { OwnerTypeormRepository } from './owner.typeorm.repository';
+import { OwnerMysqlRepository } from './owner.mysql.repository';
 
-describe('OwnerTypeormRepository', () => {
+describe('OwnerMysqlRepository', () => {
   let rawRepository: Repository<OwnerEntity>;
-  let ownerRepository: OwnerTypeormRepository;
+  let ownerRepository: OwnerMysqlRepository;
 
   const PET_INFORMATION = DUMMY_INFORMATION;
 
   beforeAll(async () => {
     rawRepository = new Repository<OwnerEntity>(null, null);
-    ownerRepository = new OwnerTypeormRepository(rawRepository);
+    ownerRepository = new OwnerMysqlRepository(rawRepository);
   });
 
-  it('OwnerTypeormRepository.save(Owner)', async () => {
+  it('OwnerMysqlRepository.save(Owner)', async () => {
     const pet = new Pet(PET_INFORMATION);
     const owner = new Owner();
     const mockedSave = jest
