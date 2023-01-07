@@ -1,11 +1,11 @@
 import { randomUUID } from 'crypto';
 import { Gender } from './information/gender';
-import { Information } from './information/information';
+import { PetInformation } from './information/pet-information';
 import { Species } from './information/species';
 import { PetID } from './pet-id';
 
 export class Pet {
-  readonly information: Information = {
+  readonly information: PetInformation = {
     name: 'name',
     age: 0,
     species: Species.DOG,
@@ -18,7 +18,7 @@ export class Pet {
   };
   readonly id: PetID;
 
-  constructor(information?: Information, id: PetID = randomUUID()) {
+  constructor(information?: PetInformation, id: PetID = randomUUID()) {
     this.information = information || this.information;
     this.id = id;
   }

@@ -2,7 +2,7 @@ import { Birthday } from './birthday';
 import { Gender } from './gender';
 import { Species } from './species';
 
-export interface Information {
+export interface PetInformation {
   name: string;
   age: number;
   gender: Gender;
