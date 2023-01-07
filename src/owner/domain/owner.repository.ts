@@ -1,4 +1,4 @@
-import { ID } from './id';
+import { ID } from './owner-id';
 import { Owner } from './owner';
 
 export interface OwnerRepository {

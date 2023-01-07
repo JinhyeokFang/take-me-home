@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ID } from '../domain/id';
 import { Owner } from '../domain/owner';
+import { OwnerID } from '../domain/owner-id';
 import { OwnerRepository } from '../domain/owner.repository';
 import { OwnerEntity } from './owner.entity';
 
@@ -19,7 +19,7 @@ export class OwnerMysqlRepository implements OwnerRepository {
     return OwnerEntity.toDomain(saved);
   }
 
-  async findOneById(id: ID): Promise<Owner> {
+  async findOneById(id: OwnerID): Promise<Owner> {
     const ownerEntity = await this.rawOwnerRepo.findOne({
       where: { id },
     });

@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Put } from '@nestjs/common';
 import { OwnerService } from '../business/owner.service';
-import { ID } from '../domain/id';
 import { Owner } from '../domain/owner';
+import { OwnerID } from '../domain/owner-id';
 import { AddPetBody } from './body/add-pet.body';
 
 @Controller('owner')
@@ -25,7 +25,7 @@ export class OwnerController {
   }
 
   @Get('/:id')
-  async findOne(id: ID) {
+  async findOne(id: OwnerID) {
     const owner = await this.ownerService.findOne({
       id,
     });
@@ -37,7 +37,7 @@ export class OwnerController {
   }
 
   @Put('/:id')
-  async addPet(id: ID, @Body() addPetBody: AddPetBody) {
+  async addPet(id: OwnerID, @Body() addPetBody: AddPetBody) {
     const owner = await this.ownerService.addPet({
       id,
       pets: addPetBody.pets,

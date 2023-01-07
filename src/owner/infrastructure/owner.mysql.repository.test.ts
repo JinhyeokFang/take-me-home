@@ -1,7 +1,6 @@
 import { Repository } from 'typeorm';
 import { Pet } from '../domain/pet/pet';
 import { Owner } from '../domain/owner';
-import { DUMMY_INFORMATION } from '../domain/pet/information/test-dummy-information';
 import { OwnerEntity } from './owner.entity';
 import { OwnerMysqlRepository } from './owner.mysql.repository';
 import { OwnerType } from '../domain/owner-type';
@@ -13,8 +12,6 @@ describe('OwnerMysqlRepository', () => {
   let owner: Owner;
   let mockedSave: jest.SpyInstance;
   let mockedFindOneById: jest.SpyInstance;
-
-  const PET_INFORMATION = DUMMY_INFORMATION;
 
   beforeAll(async () => {
     rawRepository = new Repository<OwnerEntity>(null, null);
@@ -36,7 +33,7 @@ describe('OwnerMysqlRepository', () => {
   });
 
   it('OwnerMysqlRepository.save(Owner)', async () => {
-    const pet = new Pet(PET_INFORMATION);
+    const pet = new Pet();
     owner.adoptPet(pet);
 
     await ownerRepository.save(owner);

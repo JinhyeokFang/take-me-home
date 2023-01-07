@@ -1,10 +1,10 @@
 import { randomUUID } from 'crypto';
-import { ID } from './id';
+import { OwnerID } from './owner-id';
 import { OwnerType } from './owner-type';
 import { Pet } from './pet/pet';
 
 export class Owner {
-  readonly id: ID;
+  readonly id: OwnerID;
   readonly type: OwnerType;
   private pets: Pet[] = [];
 

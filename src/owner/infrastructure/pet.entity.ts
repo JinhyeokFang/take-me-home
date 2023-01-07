@@ -1,17 +1,17 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { ID } from '../domain/pet/id';
-import { ID as OwnerID } from '../domain/id';
+import { OwnerID } from '../domain/owner-id';
 import { Birthday } from '../domain/pet/information/birthday';
 import { Gender } from '../domain/pet/information/gender';
 import { Species } from '../domain/pet/information/species';
 import { Pet } from '../domain/pet/pet';
+import { PetID } from '../domain/pet/pet-id';
 import { BirthdayTransformer } from './birthday.transformer';
 import { OwnerEntity } from './owner.entity';
 
 @Entity()
 export class PetEntity {
   @PrimaryColumn()
-  id: ID;
+  id: PetID;
 
   @Column({
     default: '',

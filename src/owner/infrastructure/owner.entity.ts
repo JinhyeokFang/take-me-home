@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
-import { ID } from '../domain/id';
+import { OwnerID } from '../domain/owner-id';
 import { Owner } from '../domain/owner';
 import { OwnerType } from '../domain/owner-type';
 import { PetEntity } from './pet.entity';
@@ -7,7 +7,7 @@ import { PetEntity } from './pet.entity';
 @Entity()
 export class OwnerEntity {
   @PrimaryColumn()
-  id: ID;
+  id: OwnerID;
 
   @OneToMany(() => PetEntity, (pet) => pet.owner, {
     eager: true,
