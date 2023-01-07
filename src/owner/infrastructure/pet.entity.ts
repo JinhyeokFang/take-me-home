@@ -26,14 +26,14 @@ export class PetEntity {
   @Column({
     type: 'enum',
     enum: Gender,
-    default: Gender.Male,
+    default: Gender.MALE,
   })
   gender: Gender;
 
   @Column({
     type: 'enum',
     enum: Species,
-    default: Species.Dog,
+    default: Species.DOG,
   })
   species: Species;
 
