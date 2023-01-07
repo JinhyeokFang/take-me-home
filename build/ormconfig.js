@@ -7,6 +7,6 @@ var typeorm_1 = require("typeorm");
 var database_module_1 = require("./module/database.module");
 (0, dotenv_1.config)();
 var configService = new config_1.ConfigService();
-var databaseConfig = database_module_1.DatabaseModule.getModuleOption(configService);
+var databaseConfig = database_module_1.DatabaseModule.getModuleOption(configService, database_module_1.DatabaseModule.migrationEntityPathList);
 exports.dataSource = new typeorm_1.DataSource(databaseConfig);
 //# sourceMappingURL=ormconfig.js.map

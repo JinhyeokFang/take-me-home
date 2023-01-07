@@ -1,10 +1,20 @@
 import { DynamicModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { join } from 'path';
 import { DataSourceOptions } from 'typeorm';
 
 export class DatabaseModule {
-  static getModuleOption(configService: ConfigService): DataSourceOptions {
+  static defaultEntityPathList = [
+    join(__dirname, '/**/*.entity.js'),
+    join(__dirname, '../**/*.entity.ts'),
+  ];
+  static migrationEntityPathList = ['src/**/*.entity.ts'];
+
+  static getModuleOption(
+    configService: ConfigService,
+    entityPathList = this.defaultEntityPathList,
+  ): DataSourceOptions {
     return {
       type: 'mysql',
       host: configService.get('DATABASE_HOST'),
@@ -12,7 +22,7 @@ export class DatabaseModule {
       username: configService.get('DATABASE_USERNAME'),
       password: configService.get('DATABASE_PASSWORD'),
       database: configService.get('DATABASE_NAME'),
-      entities: ['src/**/*.entity{.ts,.js}'],
+      entities: entityPathList,
       synchronize: configService.get('DATABASE_SYNCHRONIZE'),
       migrations: ['src/migration/*{.ts,.js}'],
     };

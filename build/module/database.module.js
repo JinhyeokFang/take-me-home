@@ -39,10 +39,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DatabaseModule = void 0;
 var config_1 = require("@nestjs/config");
 var typeorm_1 = require("@nestjs/typeorm");
+var path_1 = require("path");
 var DatabaseModule = /** @class */ (function () {
     function DatabaseModule() {
     }
-    DatabaseModule.getModuleOption = function (configService) {
+    DatabaseModule.getModuleOption = function (configService, entityPathList) {
+        if (entityPathList === void 0) { entityPathList = this.defaultEntityPathList; }
         return {
             type: 'mysql',
             host: configService.get('DATABASE_HOST'),
@@ -50,7 +52,7 @@ var DatabaseModule = /** @class */ (function () {
             username: configService.get('DATABASE_USERNAME'),
             password: configService.get('DATABASE_PASSWORD'),
             database: configService.get('DATABASE_NAME'),
-            entities: ['src/**/*.entity.ts', 'dist/**/*.entity.js'],
+            entities: entityPathList,
             synchronize: configService.get('DATABASE_SYNCHRONIZE'),
             migrations: ['src/migration/*{.ts,.js}'],
         };
@@ -67,6 +69,11 @@ var DatabaseModule = /** @class */ (function () {
             inject: [config_1.ConfigService],
         });
     };
+    DatabaseModule.defaultEntityPathList = [
+        (0, path_1.join)(__dirname, '/**/*.entity.js'),
+        (0, path_1.join)(__dirname, '../**/*.entity.ts'),
+    ];
+    DatabaseModule.migrationEntityPathList = ['src/**/*.entity.ts'];
     return DatabaseModule;
 }());
 exports.DatabaseModule = DatabaseModule;

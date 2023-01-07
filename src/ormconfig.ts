@@ -6,6 +6,9 @@ import { DatabaseModule } from './module/database.module';
 envConfig();
 
 const configService = new ConfigService();
-const databaseConfig = DatabaseModule.getModuleOption(configService);
+const databaseConfig = DatabaseModule.getModuleOption(
+  configService,
+  DatabaseModule.migrationEntityPathList,
+);
 
 export const dataSource = new DataSource(databaseConfig);
