@@ -3,8 +3,6 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DatabaseModule } from './module/database.module';
 import { EnvConfigModule } from './module/env-config.module';
-import { OwnerEntity } from './owner/infrastructure/owner.entity';
-import { PetEntity } from './owner/infrastructure/pet.entity';
 import { OwnerModule } from './owner/owner.module';
 
 @Module(AppModule.metadata)

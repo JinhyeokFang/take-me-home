@@ -37,3 +37,6 @@ coverage
 TODO.md
 
 .env*
+
+*migration.ts
+migration
