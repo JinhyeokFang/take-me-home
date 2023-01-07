@@ -1,13 +1,16 @@
 import { randomUUID } from 'crypto';
 import { ID } from './id';
+import { OwnerType } from './owner-type';
 import { Pet } from './pet/pet';
 
 export class Owner {
   readonly id: ID;
+  readonly type: OwnerType;
   private pets: Pet[] = [];
 
-  constructor(id?: ID) {
-    this.id = id || randomUUID();
+  constructor(type = OwnerType.INDIVIDUAL, id = randomUUID()) {
+    this.type = type;
+    this.id = id;
   }
 
   adoptPet(pet: Pet) {

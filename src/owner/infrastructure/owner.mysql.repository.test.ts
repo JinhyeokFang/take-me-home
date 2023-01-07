@@ -4,6 +4,7 @@ import { Owner } from '../domain/owner';
 import { DUMMY_INFORMATION } from '../domain/pet/information/test-dummy-information';
 import { OwnerEntity } from './owner.entity';
 import { OwnerMysqlRepository } from './owner.mysql.repository';
+import { OwnerType } from '../domain/owner-type';
 
 describe('OwnerMysqlRepository', () => {
   let rawRepository: Repository<OwnerEntity>;
@@ -21,7 +22,7 @@ describe('OwnerMysqlRepository', () => {
   });
 
   beforeEach(async () => {
-    owner = new Owner();
+    owner = new Owner(OwnerType.SHELTER);
     mockedSave = jest
       .spyOn(rawRepository, 'save')
       .mockImplementation(async () => {
@@ -43,7 +44,8 @@ describe('OwnerMysqlRepository', () => {
 
     expect(mockedSave).toBeCalled();
     expect(mockedFindOneById).toBeCalled();
-    expect(owner.id === ownerFromQuery.id).toBe(true);
+    expect(owner.id).toBe(ownerFromQuery.id);
+    expect(owner.type).toBe(ownerFromQuery.type);
     expect(owner.getPetLists()).toStrictEqual(ownerFromQuery.getPetLists());
   });
 });

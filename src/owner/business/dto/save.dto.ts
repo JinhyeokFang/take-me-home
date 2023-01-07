@@ -1,4 +1,4 @@
-import { Owner } from 'src/owner/domain/owner';
+import { Owner } from '../../domain/owner';
 
 export interface SaveDTO {
   owner: Owner;

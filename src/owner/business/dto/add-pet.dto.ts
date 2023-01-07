@@ -1,5 +1,5 @@
-import { ID } from 'src/owner/domain/id';
-import { Pet } from 'src/owner/domain/pet/pet';
+import { ID } from '../../domain/id';
+import { Pet } from '../../domain/pet/pet';
 
 export interface AddPetDTO {
   id: ID;

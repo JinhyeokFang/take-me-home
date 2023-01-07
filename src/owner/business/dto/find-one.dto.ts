@@ -1,4 +1,4 @@
-import { ID } from 'src/owner/domain/id';
+import { ID } from '../../domain/id';
 
 export interface FindOneDTO {
   id: ID;
