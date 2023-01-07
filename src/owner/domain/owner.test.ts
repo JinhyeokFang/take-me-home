@@ -23,4 +23,15 @@ describe('Owner', () => {
     const shelter = new Owner(OwnerType.SHELTER);
     expect(individual.type).not.toBe(shelter.type);
   });
+
+  it('Owner.createNewPet(PetInformation?)', () => {
+    const shelter = new Owner(OwnerType.SHELTER);
+    const individual = new Owner(OwnerType.INDIVIDUAL);
+
+    shelter.createNewPet();
+    expect(shelter.getPetLists().length).toBe(1);
+    expect(() => {
+      individual.createNewPet();
+    }).toThrowError();
+  });
 });

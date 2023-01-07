@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto';
 import { OwnerID } from './owner-id';
 import { OwnerType } from './owner-type';
+import { PetInformation } from './pet/information/pet-information';
 import { Pet } from './pet/pet';
 
 export class Owner {
@@ -24,5 +25,11 @@ export class Owner {
 
   getPetLists() {
     return this.pets;
+  }
+
+  createNewPet(information?: PetInformation) {
+    if (this.type !== OwnerType.SHELTER)
+      throw new Error('only shelter can create new pet');
+    this.pets.push(new Pet(information));
   }
 }
