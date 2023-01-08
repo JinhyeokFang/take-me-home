@@ -41,6 +41,9 @@ export class OwnerEntity {
         return PetEntity.toDomain(petEntity);
       });
 
-    return ownerFactory.createOwner(ownerEntity.type, pets, id);
+    return ownerFactory.createOwner(ownerEntity.type, {
+      pets,
+      id,
+    });
   }
 }

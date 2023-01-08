@@ -1,21 +1,22 @@
 import { Individual } from './individual';
-import { Owner } from './owner';
-import { OwnerID } from './owner-id';
+import { Owner, OwnerConstructorParams } from './owner';
 import { OwnerType } from './owner-type';
-import { Pet } from './pet/pet';
 import { Shelter } from './shelter';
 
 export class OwnerFactory {
-  public createOwner(ownerType: OwnerType, pets?: Pet[], id?: OwnerID): Owner {
-    if (ownerType === OwnerType.SHELTER) return this.createShelter(pets, id);
-    return this.createIndividual(pets, id);
+  public createOwner(
+    ownerType: OwnerType,
+    parameters: OwnerConstructorParams = {},
+  ): Owner {
+    if (ownerType === OwnerType.SHELTER) return this.createShelter(parameters);
+    return this.createIndividual(parameters);
   }
 
-  private createShelter(pets?: Pet[], id?: OwnerID): Owner {
-    return new Shelter(pets, id);
+  private createShelter(parameters: OwnerConstructorParams): Owner {
+    return new Shelter(parameters);
   }
 
-  private createIndividual(pets?: Pet[], id?: OwnerID): Owner {
-    return new Individual(pets, id);
+  private createIndividual(parameters: OwnerConstructorParams): Owner {
+    return new Individual(parameters);
   }
 }

@@ -4,15 +4,20 @@ import { OwnerType } from './owner-type';
 import { Pet } from './pet/pet';
 import { PetID } from './pet/pet-id';
 
+export interface OwnerConstructorParams {
+  id?: OwnerID;
+  pets?: Pet[];
+}
+
 export class Owner {
   readonly id: OwnerID;
   readonly type: OwnerType;
   protected pets: Pet[] = [];
 
-  protected constructor(type: OwnerType, pets = [], id = randomUUID()) {
+  protected constructor(type: OwnerType, parameters: OwnerConstructorParams) {
     this.type = type;
-    this.pets = pets;
-    this.id = id;
+    this.pets = parameters.pets || [];
+    this.id = parameters.id || randomUUID();
   }
 
   adoptPet(pet: Pet, owner: Owner) {

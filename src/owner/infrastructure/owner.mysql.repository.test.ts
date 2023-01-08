@@ -21,7 +21,9 @@ describe('OwnerMysqlRepository', () => {
 
   beforeEach(async () => {
     const ownerFactory = new OwnerFactory();
-    owner = ownerFactory.createOwner(OwnerType.SHELTER, [new Pet()]);
+    owner = ownerFactory.createOwner(OwnerType.SHELTER, {
+      pets: [new Pet()],
+    });
     mockedSave = jest
       .spyOn(rawRepository, 'save')
       .mockImplementation(async () => {
