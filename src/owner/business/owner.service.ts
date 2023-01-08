@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { OwnerRepository } from '../domain/owner.repository';
+import { Shelter } from '../domain/shelter';
 import { OwnerMysqlRepository } from '../infrastructure/owner.mysql.repository';
 import { AddPetDTO } from './dto/add-pet.dto';
 import { FindOneDTO } from './dto/find-one.dto';
@@ -24,7 +25,8 @@ export class OwnerService {
   async addPet(dto: AddPetDTO) {
     const owner = await this.ownerRepository.findOneById(dto.id);
     for (const pet of dto.pets) {
-      owner.createNewPet(pet.information);
+      if (owner instanceof Shelter)
+        (owner as Shelter).createNewPet(pet.information);
     }
     return await this.ownerRepository.save(owner);
   }

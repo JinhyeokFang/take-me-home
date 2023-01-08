@@ -1,4 +1,3 @@
-import { Owner } from '../domain/owner';
 import { OwnerType } from '../domain/owner-type';
 import { OwnerFactory } from '../domain/owner.factory';
 import { OwnerMysqlRepository } from '../infrastructure/owner.mysql.repository';

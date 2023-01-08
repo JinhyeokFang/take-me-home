@@ -1,15 +1,16 @@
 import { Owner } from './owner';
 import { OwnerType } from './owner-type';
 import { OwnerFactory } from './owner.factory';
+import { Shelter } from './shelter';
 
 describe('Owner', () => {
   let ownerFactory: OwnerFactory;
-  let shelter: Owner;
+  let shelter: Shelter;
   let individual: Owner;
 
   beforeEach(async () => {
     ownerFactory = new OwnerFactory();
-    shelter = ownerFactory.createOwner(OwnerType.SHELTER);
+    shelter = ownerFactory.createOwner(OwnerType.SHELTER) as Shelter;
     individual = ownerFactory.createOwner(OwnerType.INDIVIDUAL);
   });
 
@@ -37,8 +38,5 @@ describe('Owner', () => {
   it('Owner.createNewPet(PetInformation?)', () => {
     shelter.createNewPet();
     expect(shelter.getPetLists().length).toBe(1);
-    expect(() => {
-      individual.createNewPet();
-    }).toThrowError();
   });
 });
