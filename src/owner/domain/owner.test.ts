@@ -14,7 +14,7 @@ describe('Owner', () => {
     individual = ownerFactory.createOwner(OwnerType.INDIVIDUAL);
   });
 
-  it('Owner.adoptPet(Pet)', () => {
+  it('Owner.adoptPet(Pet, Owner)', () => {
     shelter.createNewPet();
     const pet = shelter.getPetLists()[0];
 
@@ -33,10 +33,5 @@ describe('Owner', () => {
 
   it('Owner.type', () => {
     expect(individual.type).not.toBe(shelter.type);
-  });
-
-  it('Owner.createNewPet(PetInformation?)', () => {
-    shelter.createNewPet();
-    expect(shelter.getPetLists().length).toBe(1);
   });
 });

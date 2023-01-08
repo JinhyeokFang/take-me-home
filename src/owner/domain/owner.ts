@@ -15,10 +15,10 @@ export class Owner {
     this.id = id;
   }
 
-  adoptPet(pet: Pet, shelter: Owner) {
-    if (!shelter.hasPet(pet))
-      throw new Error(`Shelter does not have the pet that id is ${pet.id}`);
-    shelter.removePet(pet.id);
+  adoptPet(pet: Pet, owner: Owner) {
+    if (!owner.hasPet(pet))
+      throw new Error(`Owner does not have the pet that id is ${pet.id}`);
+    owner.removePet(pet.id);
     this.pets.push(pet);
   }
 
