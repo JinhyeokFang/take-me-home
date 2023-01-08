@@ -24,7 +24,7 @@ export class OwnerService {
   async addPet(dto: AddPetDTO) {
     const owner = await this.ownerRepository.findOneById(dto.id);
     for (const pet of dto.pets) {
-      owner.adoptPet(pet);
+      owner.createNewPet(pet.information);
     }
     return await this.ownerRepository.save(owner);
   }

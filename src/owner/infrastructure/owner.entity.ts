@@ -3,6 +3,7 @@ import { OwnerID } from '../domain/owner-id';
 import { Owner } from '../domain/owner';
 import { OwnerType } from '../domain/owner-type';
 import { PetEntity } from './pet.entity';
+import { Pet } from '../domain/pet/pet';
 
 @Entity()
 export class OwnerEntity {
@@ -32,12 +33,11 @@ export class OwnerEntity {
 
   static toDomain(ownerEntity: OwnerEntity): Owner {
     const id = ownerEntity.id;
-    const owner = new Owner(ownerEntity.type, id);
-    if (ownerEntity.pets)
-      ownerEntity.pets.forEach((petEntity) => {
-        const pet = PetEntity.toDomain(petEntity);
-        owner.adoptPet(pet);
-      });
-    return owner;
+    const pets: Pet[] = ownerEntity.pets
+      ? ownerEntity.pets.map((petEntity) => {
+          return PetEntity.toDomain(petEntity);
+        })
+      : [];
+    return new Owner(ownerEntity.type, id, pets);
   }
 }

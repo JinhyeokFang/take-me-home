@@ -1,20 +1,24 @@
-import { Pet } from './pet/pet';
 import { Owner } from './owner';
 import { OwnerType } from './owner-type';
 
 describe('Owner', () => {
   it('Owner.adoptPet(Pet)', () => {
+    const shelter = new Owner(OwnerType.SHELTER);
     const owner = new Owner();
-    const pet = new Pet();
-    owner.adoptPet(pet);
-    const hasPet = owner.hasPet(pet);
-    expect(hasPet).toBe(true);
+    shelter.createNewPet();
+    const pet = shelter.getPetLists()[0];
+
+    owner.adoptPet(pet, shelter);
+
+    expect(shelter.hasPet(pet)).toBe(false);
+    expect(owner.hasPet(pet)).toBe(true);
   });
 
   it('Owner.id', () => {
     const owner = new Owner();
     const anotherOwner = new Owner();
     const isSameId = owner.id === anotherOwner.id;
+
     expect(isSameId).toBe(false);
   });
 

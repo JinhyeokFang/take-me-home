@@ -9,6 +9,7 @@ describe('OwnerMysqlRepository', () => {
   let rawRepository: Repository<OwnerEntity>;
   let ownerRepository: OwnerMysqlRepository;
 
+  let pet: Pet;
   let owner: Owner;
   let mockedSave: jest.SpyInstance;
   let mockedFindOneById: jest.SpyInstance;
@@ -19,7 +20,8 @@ describe('OwnerMysqlRepository', () => {
   });
 
   beforeEach(async () => {
-    owner = new Owner(OwnerType.SHELTER);
+    pet = new Pet();
+    owner = new Owner(OwnerType.SHELTER, null, [pet]);
     mockedSave = jest
       .spyOn(rawRepository, 'save')
       .mockImplementation(async () => {
@@ -33,9 +35,6 @@ describe('OwnerMysqlRepository', () => {
   });
 
   it('OwnerMysqlRepository.save(Owner)', async () => {
-    const pet = new Pet();
-    owner.adoptPet(pet);
-
     await ownerRepository.save(owner);
     const ownerFromQuery = await ownerRepository.findOneById(owner.id);
 
