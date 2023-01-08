@@ -20,8 +20,8 @@ describe('Owner', () => {
 
     individual.adoptPet(pet, shelter);
 
-    expect(shelter.hasPet(pet)).toBe(false);
-    expect(individual.hasPet(pet)).toBe(true);
+    expect(shelter.hasPet(pet.id)).toBe(false);
+    expect(individual.hasPet(pet.id)).toBe(true);
   });
 
   it('Owner.id', () => {

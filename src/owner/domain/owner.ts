@@ -16,7 +16,7 @@ export class Owner {
   }
 
   adoptPet(pet: Pet, owner: Owner) {
-    if (!owner.hasPet(pet))
+    if (!owner.hasPet(pet.id))
       throw new Error(`Owner does not have the pet that id is ${pet.id}`);
     owner.removePet(pet.id);
     this.pets.push(pet);
@@ -32,9 +32,8 @@ export class Owner {
     this.pets.splice(petIndex, 1);
   }
 
-  hasPet(anotherPet: Pet) {
-    const pet = this.getPetIndex(anotherPet.id);
-    return pet !== null;
+  hasPet(petId: PetID) {
+    return this.getPetIndex(petId) !== null;
   }
 
   getPetLists() {
