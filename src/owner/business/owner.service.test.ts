@@ -22,12 +22,12 @@ describe('OwnerService', () => {
     mockedFindOneById = jest
       .spyOn(ownerMysqlRepository, 'findOneById')
       .mockImplementation(async () => {
-        return new Owner();
+        return Owner.createIndividual();
       });
   });
 
   it('OwnerService.save()', async () => {
-    const owner = new Owner();
+    const owner = Owner.createIndividual();
     await ownerService.save({
       owner,
     });

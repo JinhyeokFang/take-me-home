@@ -10,10 +10,18 @@ export class Owner {
   readonly type: OwnerType;
   private pets: Pet[] = [];
 
-  constructor(type = OwnerType.INDIVIDUAL, id = randomUUID(), pets = []) {
+  private constructor(type: OwnerType, pets = [], id = randomUUID()) {
     this.type = type;
-    this.id = id;
     this.pets = pets;
+    this.id = id;
+  }
+
+  static createShelter(pets?: Pet[], id?: OwnerID): Owner {
+    return new Owner(OwnerType.SHELTER, pets, id);
+  }
+
+  static createIndividual(pets?: Pet[], id?: OwnerID): Owner {
+    return new Owner(OwnerType.INDIVIDUAL, pets, id);
   }
 
   adoptPet(pet: Pet, shelter: Owner) {

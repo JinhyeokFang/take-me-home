@@ -3,7 +3,6 @@ import { Pet } from '../domain/pet/pet';
 import { Owner } from '../domain/owner';
 import { OwnerEntity } from './owner.entity';
 import { OwnerMysqlRepository } from './owner.mysql.repository';
-import { OwnerType } from '../domain/owner-type';
 
 describe('OwnerMysqlRepository', () => {
   let rawRepository: Repository<OwnerEntity>;
@@ -21,7 +20,7 @@ describe('OwnerMysqlRepository', () => {
 
   beforeEach(async () => {
     pet = new Pet();
-    owner = new Owner(OwnerType.SHELTER, null, [pet]);
+    owner = Owner.createShelter([pet]);
     mockedSave = jest
       .spyOn(rawRepository, 'save')
       .mockImplementation(async () => {

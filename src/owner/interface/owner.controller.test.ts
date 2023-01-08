@@ -15,7 +15,7 @@ describe('OwnerController', () => {
     ownerService = new OwnerService(null);
     ownerController = new OwnerController(ownerService);
 
-    owner = new Owner();
+    owner = Owner.createShelter();
     mockedSave = jest
       .spyOn(ownerService, 'save')
       .mockImplementation(async () => {
@@ -30,7 +30,7 @@ describe('OwnerController', () => {
       .spyOn(ownerService, 'addPet')
       .mockImplementation(async (dto) => {
         expect(dto.id).toBe('1');
-        return new Owner();
+        return owner;
       });
   });
 

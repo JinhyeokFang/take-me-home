@@ -10,7 +10,7 @@ export class OwnerController {
 
   @Post('/')
   async createOwner() {
-    const owner = new Owner();
+    const owner = Owner.createIndividual();
     await this.ownerService.save({
       owner,
     });

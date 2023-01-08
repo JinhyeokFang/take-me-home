@@ -1,10 +1,9 @@
 import { Owner } from './owner';
-import { OwnerType } from './owner-type';
 
 describe('Owner', () => {
   it('Owner.adoptPet(Pet)', () => {
-    const shelter = new Owner(OwnerType.SHELTER);
-    const owner = new Owner();
+    const shelter = Owner.createShelter();
+    const owner = Owner.createIndividual();
     shelter.createNewPet();
     const pet = shelter.getPetLists()[0];
 
@@ -15,22 +14,22 @@ describe('Owner', () => {
   });
 
   it('Owner.id', () => {
-    const owner = new Owner();
-    const anotherOwner = new Owner();
+    const owner = Owner.createIndividual();
+    const anotherOwner = Owner.createIndividual();
     const isSameId = owner.id === anotherOwner.id;
 
     expect(isSameId).toBe(false);
   });
 
   it('Owner.type', () => {
-    const individual = new Owner(OwnerType.INDIVIDUAL);
-    const shelter = new Owner(OwnerType.SHELTER);
+    const individual = Owner.createIndividual();
+    const shelter = Owner.createShelter();
     expect(individual.type).not.toBe(shelter.type);
   });
 
   it('Owner.createNewPet(PetInformation?)', () => {
-    const shelter = new Owner(OwnerType.SHELTER);
-    const individual = new Owner(OwnerType.INDIVIDUAL);
+    const individual = Owner.createIndividual();
+    const shelter = Owner.createShelter();
 
     shelter.createNewPet();
     expect(shelter.getPetLists().length).toBe(1);

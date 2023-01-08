@@ -33,11 +33,14 @@ export class OwnerEntity {
 
   static toDomain(ownerEntity: OwnerEntity): Owner {
     const id = ownerEntity.id;
-    const pets: Pet[] = ownerEntity.pets
-      ? ownerEntity.pets.map((petEntity) => {
-          return PetEntity.toDomain(petEntity);
-        })
-      : [];
-    return new Owner(ownerEntity.type, id, pets);
+    let pets: Pet[] = [];
+    if (ownerEntity.pets)
+      pets = ownerEntity.pets.map((petEntity) => {
+        return PetEntity.toDomain(petEntity);
+      });
+
+    if (ownerEntity.type === OwnerType.INDIVIDUAL)
+      return Owner.createIndividual(pets, id);
+    return Owner.createShelter(pets, id);
   }
 }
