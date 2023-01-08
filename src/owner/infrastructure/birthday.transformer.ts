@@ -28,7 +28,7 @@ export class BirthdayTransformer implements ValueTransformer {
   private zeroFill(str: string, length: number): string {
     const zeroStringLength = str.length - length;
     if (zeroStringLength < 0) {
-      throw new Error('str should be longer than length');
+      return str;
     }
 
     const zeroString = '0'.repeat(zeroStringLength);

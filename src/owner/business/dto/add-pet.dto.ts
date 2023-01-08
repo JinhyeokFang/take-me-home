@@ -1,7 +1,7 @@
-import { ID } from '../../domain/id';
-import { Pet } from '../../domain/pet/pet';
+import { OwnerID } from '../../domain/owner-id';
+import { PetInformation } from '../../domain/pet/information/pet-information';
 
 export interface AddPetDTO {
-  id: ID;
-  pets: Pet[];
+  id: OwnerID;
+  petInformations: PetInformation[];
 }

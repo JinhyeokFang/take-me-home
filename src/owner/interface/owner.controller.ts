@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { OwnerService } from '../business/owner.service';
 import { OwnerID } from '../domain/owner-id';
 import { OwnerType } from '../domain/owner-type';
@@ -12,7 +12,7 @@ export class OwnerController {
   @Post('/')
   async createOwner() {
     const ownerFactory = new OwnerFactory();
-    const owner = ownerFactory.createOwner(OwnerType.INDIVIDUAL);
+    const owner = ownerFactory.createOwner(OwnerType.SHELTER);
     await this.ownerService.save({
       owner,
     });
@@ -27,7 +27,7 @@ export class OwnerController {
   }
 
   @Get('/:id')
-  async findOne(id: OwnerID) {
+  async findOne(@Param('id') id: OwnerID) {
     const owner = await this.ownerService.findOne({
       id,
     });
@@ -39,10 +39,10 @@ export class OwnerController {
   }
 
   @Put('/:id')
-  async addPet(id: OwnerID, @Body() addPetBody: AddPetBody) {
+  async addPet(@Param('id') id: OwnerID, @Body() addPetBody: AddPetBody) {
     const owner = await this.ownerService.addPet({
       id,
-      pets: addPetBody.pets,
+      petInformations: addPetBody.pets,
     });
 
     return {

@@ -49,7 +49,7 @@ describe('OwnerService', () => {
   it('OwnerService.addPet()', async () => {
     await ownerService.addPet({
       id: '',
-      pets: [],
+      petInformations: [],
     });
 
     expect(mockedSave).toBeCalled();

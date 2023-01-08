@@ -1,5 +1,4 @@
 import { INestApplication } from '@nestjs/common';
-import { DUMMY_INFORMATION } from '../src/owner/domain/pet/information/test-dummy-information';
 import { Pet } from '../src/owner/domain/pet/pet';
 import * as request from 'supertest';
 import { TestModule } from './test.module';
@@ -29,16 +28,16 @@ describe('OwnerController (e2e)', () => {
       .post('/owner')
       .send({});
     const ownerId = saveRequest.body.owner.id;
-    const pet = new Pet(DUMMY_INFORMATION);
+    const pet = new Pet();
 
     const response = await request(app.getHttpServer())
       .put('/owner/' + ownerId)
       .send({
-        pets: [pet],
+        pets: [pet.information],
       });
 
-    expect(response.body.owner.pets.find((p) => p.id === pet.id)).not.toBe(
-      undefined,
+    expect(response.body.owner.pets[0].information).toStrictEqual(
+      pet.information,
     );
   });
 
