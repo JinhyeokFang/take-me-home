@@ -4,6 +4,7 @@ import { Owner } from '../domain/owner';
 import { OwnerType } from '../domain/owner-type';
 import { PetEntity } from './pet.entity';
 import { Pet } from '../domain/pet/pet';
+import { OwnerFactory } from '../domain/owner.factory';
 
 @Entity()
 export class OwnerEntity {
@@ -32,6 +33,7 @@ export class OwnerEntity {
   }
 
   static toDomain(ownerEntity: OwnerEntity): Owner {
+    const ownerFactory = new OwnerFactory();
     const id = ownerEntity.id;
     let pets: Pet[] = [];
     if (ownerEntity.pets)
@@ -39,8 +41,6 @@ export class OwnerEntity {
         return PetEntity.toDomain(petEntity);
       });
 
-    if (ownerEntity.type === OwnerType.INDIVIDUAL)
-      return Owner.createIndividual(pets, id);
-    return Owner.createShelter(pets, id);
+    return ownerFactory.createOwner(ownerEntity.type, pets, id);
   }
 }

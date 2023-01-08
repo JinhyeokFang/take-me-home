@@ -1,5 +1,7 @@
 import { OwnerService } from '../business/owner.service';
 import { Owner } from '../domain/owner';
+import { OwnerType } from '../domain/owner-type';
+import { OwnerFactory } from '../domain/owner.factory';
 import { OwnerController } from './owner.controller';
 
 describe('OwnerController', () => {
@@ -12,10 +14,11 @@ describe('OwnerController', () => {
   let mockedAddPet: jest.SpyInstance;
 
   beforeEach(() => {
+    const ownerFactory = new OwnerFactory();
+
+    owner = ownerFactory.createOwner(OwnerType.SHELTER);
     ownerService = new OwnerService(null);
     ownerController = new OwnerController(ownerService);
-
-    owner = Owner.createShelter();
     mockedSave = jest
       .spyOn(ownerService, 'save')
       .mockImplementation(async () => {

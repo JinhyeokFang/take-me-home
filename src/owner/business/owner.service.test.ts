@@ -1,8 +1,11 @@
 import { Owner } from '../domain/owner';
+import { OwnerType } from '../domain/owner-type';
+import { OwnerFactory } from '../domain/owner.factory';
 import { OwnerMysqlRepository } from '../infrastructure/owner.mysql.repository';
 import { OwnerService } from './owner.service';
 
 describe('OwnerService', () => {
+  let ownerFactory: OwnerFactory;
   let ownerMysqlRepository: OwnerMysqlRepository;
   let ownerService: OwnerService;
 
@@ -10,6 +13,7 @@ describe('OwnerService', () => {
   let mockedFindOneById: jest.SpyInstance;
 
   beforeEach(async () => {
+    ownerFactory = new OwnerFactory();
     ownerMysqlRepository = new OwnerMysqlRepository(null);
     ownerService = new OwnerService(ownerMysqlRepository);
 
@@ -22,12 +26,12 @@ describe('OwnerService', () => {
     mockedFindOneById = jest
       .spyOn(ownerMysqlRepository, 'findOneById')
       .mockImplementation(async () => {
-        return Owner.createIndividual();
+        return ownerFactory.createOwner(OwnerType.INDIVIDUAL);
       });
   });
 
   it('OwnerService.save()', async () => {
-    const owner = Owner.createIndividual();
+    const owner = ownerFactory.createOwner(OwnerType.INDIVIDUAL);
     await ownerService.save({
       owner,
     });

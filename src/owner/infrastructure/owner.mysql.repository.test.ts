@@ -3,12 +3,13 @@ import { Pet } from '../domain/pet/pet';
 import { Owner } from '../domain/owner';
 import { OwnerEntity } from './owner.entity';
 import { OwnerMysqlRepository } from './owner.mysql.repository';
+import { OwnerType } from '../domain/owner-type';
+import { OwnerFactory } from '../domain/owner.factory';
 
 describe('OwnerMysqlRepository', () => {
   let rawRepository: Repository<OwnerEntity>;
   let ownerRepository: OwnerMysqlRepository;
 
-  let pet: Pet;
   let owner: Owner;
   let mockedSave: jest.SpyInstance;
   let mockedFindOneById: jest.SpyInstance;
@@ -19,8 +20,8 @@ describe('OwnerMysqlRepository', () => {
   });
 
   beforeEach(async () => {
-    pet = new Pet();
-    owner = Owner.createShelter([pet]);
+    const ownerFactory = new OwnerFactory();
+    owner = ownerFactory.createOwner(OwnerType.SHELTER, [new Pet()]);
     mockedSave = jest
       .spyOn(rawRepository, 'save')
       .mockImplementation(async () => {

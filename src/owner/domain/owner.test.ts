@@ -1,36 +1,40 @@
 import { Owner } from './owner';
+import { OwnerType } from './owner-type';
+import { OwnerFactory } from './owner.factory';
 
 describe('Owner', () => {
+  let ownerFactory: OwnerFactory;
+  let shelter: Owner;
+  let individual: Owner;
+
+  beforeEach(async () => {
+    ownerFactory = new OwnerFactory();
+    shelter = ownerFactory.createOwner(OwnerType.SHELTER);
+    individual = ownerFactory.createOwner(OwnerType.INDIVIDUAL);
+  });
+
   it('Owner.adoptPet(Pet)', () => {
-    const shelter = Owner.createShelter();
-    const owner = Owner.createIndividual();
     shelter.createNewPet();
     const pet = shelter.getPetLists()[0];
 
-    owner.adoptPet(pet, shelter);
+    individual.adoptPet(pet, shelter);
 
     expect(shelter.hasPet(pet)).toBe(false);
-    expect(owner.hasPet(pet)).toBe(true);
+    expect(individual.hasPet(pet)).toBe(true);
   });
 
   it('Owner.id', () => {
-    const owner = Owner.createIndividual();
-    const anotherOwner = Owner.createIndividual();
-    const isSameId = owner.id === anotherOwner.id;
+    const anotherOwner = ownerFactory.createOwner(OwnerType.INDIVIDUAL);
+    const isSameId = individual.id === anotherOwner.id;
 
     expect(isSameId).toBe(false);
   });
 
   it('Owner.type', () => {
-    const individual = Owner.createIndividual();
-    const shelter = Owner.createShelter();
     expect(individual.type).not.toBe(shelter.type);
   });
 
   it('Owner.createNewPet(PetInformation?)', () => {
-    const individual = Owner.createIndividual();
-    const shelter = Owner.createShelter();
-
     shelter.createNewPet();
     expect(shelter.getPetLists().length).toBe(1);
     expect(() => {
