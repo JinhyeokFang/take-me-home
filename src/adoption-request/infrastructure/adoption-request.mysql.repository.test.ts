@@ -40,7 +40,7 @@ describe('AdoptionRequestMysqlRepository', () => {
       });
   });
 
-  it('AdoptionRequestMysqlRepository.save(Owner)', async () => {
+  it('AdoptionRequestMysqlRepository.save(Request)', async () => {
     await repository.save(request);
     const requestFromQuery = await repository.findOneById(request.id);
 

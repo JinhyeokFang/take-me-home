@@ -18,13 +18,25 @@ export class AdoptionRequestMysqlRepository
   ) {}
 
   async findByShelterID(shelterId: ShelterID): Promise<AdoptionRequest[]> {
-    return [];
+    const entities = await this.rawRepository.find({
+      where: { shelterId },
+    });
+    const requests = entities.map((entity) =>
+      AdoptionRequestEntity.toDomain(entity),
+    );
+    return requests;
   }
 
   async findByRequestorID(
     requestorId: RequestorID,
   ): Promise<AdoptionRequest[]> {
-    return [];
+    const entities = await this.rawRepository.find({
+      where: { requestorId },
+    });
+    const requests = entities.map((entity) =>
+      AdoptionRequestEntity.toDomain(entity),
+    );
+    return requests;
   }
 
   async findOneById(id: RequestID): Promise<AdoptionRequest> {
