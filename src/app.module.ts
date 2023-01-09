@@ -1,6 +1,7 @@
 import { Module, ModuleMetadata } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { DatabaseModule } from './module/database.module';
 import { EnvConfigModule } from './module/env-config.module';
 import { OwnerModule } from './owner/owner.module';
@@ -12,6 +13,7 @@ export class AppModule {
       OwnerModule,
       EnvConfigModule.getModule(),
       DatabaseModule.getModule(),
+      EventEmitterModule.forRoot(),
     ],
     controllers: [],
     providers: [],

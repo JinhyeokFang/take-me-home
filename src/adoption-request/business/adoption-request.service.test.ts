@@ -1,8 +1,8 @@
-import { AdoptionRequest } from "../domain/adoption-request";
-import { RequestData } from "../domain/request-data";
-import { RequestState } from "../domain/request-state";
-import { AdoptionRequestMysqlRepository } from "../infrastructure/adoption-request.mysql.repository";
-import { AdoptionRequestService } from "./adoption-request.service";
+import { AdoptionRequest } from '../domain/adoption-request';
+import { RequestData } from '../domain/request-data';
+import { RequestState } from '../domain/request-state';
+import { AdoptionRequestMysqlRepository } from '../infrastructure/adoption-request.mysql.repository';
+import { AdoptionRequestService } from './adoption-request.service';
 
 describe('AdoptionRequestService', () => {
   let request: AdoptionRequest;
