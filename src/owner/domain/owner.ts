@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+import { OwnerData } from './owner-data/owner-data';
 import { OwnerID } from './owner-id';
 import { OwnerType } from './owner-type';
 import { Pet } from './pet/pet';
@@ -7,17 +8,20 @@ import { PetID } from './pet/pet-id';
 export interface OwnerConstructorParams {
   id?: OwnerID;
   pets?: Pet[];
+  data?: OwnerData;
 }
 
 export class Owner {
   readonly id: OwnerID;
   readonly type: OwnerType;
+  readonly data: OwnerData;
   protected pets: Pet[] = [];
 
   protected constructor(type: OwnerType, parameters: OwnerConstructorParams) {
     this.type = type;
     this.pets = parameters.pets || [];
     this.id = parameters.id || randomUUID();
+    this.data = parameters.data;
   }
 
   adoptPet(pet: Pet, owner: Owner) {

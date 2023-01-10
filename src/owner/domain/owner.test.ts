@@ -34,4 +34,22 @@ describe('Owner', () => {
   it('Owner.type', () => {
     expect(individual.type).not.toBe(shelter.type);
   });
+
+  it('Owner.data', () => {
+    const ownerData = {
+      name: 'Name',
+      phoneNumber: '010-0000-0000',
+      address: {
+        city: 'Seoul',
+        street: 'Street',
+        zipCode: '00000',
+      },
+    };
+
+    const owner = ownerFactory.createOwner(OwnerType.INDIVIDUAL, {
+      data: ownerData,
+    });
+
+    expect(owner.data).toStrictEqual(ownerData);
+  });
 });
