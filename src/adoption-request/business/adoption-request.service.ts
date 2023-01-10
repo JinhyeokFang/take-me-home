@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { AdoptionRequest } from '../domain/adoption-request';
-import { AdoptionRequestRepository } from '../domain/adoption-request.repository';
 import { RequestData } from '../domain/request-data';
+import { AdoptionRequestMysqlRepository } from '../infrastructure/adoption-request.mysql.repository';
 
 @Injectable()
 export class AdoptionRequestService {
   constructor(
-    private readonly adoptionRequestRepository: AdoptionRequestRepository,
+    private readonly adoptionRequestRepository: AdoptionRequestMysqlRepository,
   ) {}
 
   async create(requestData: RequestData): Promise<AdoptionRequest> {
