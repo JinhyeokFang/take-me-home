@@ -39,6 +39,9 @@ export class AdoptionRequestEntity {
   }
 
   static toDomain(entity: AdoptionRequestEntity): AdoptionRequest {
+    if (entity === null) {
+      return null;
+    }
     return new AdoptionRequest(
       {
         requestorId: entity.requestorId,

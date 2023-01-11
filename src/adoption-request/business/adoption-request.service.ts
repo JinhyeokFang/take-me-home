@@ -14,4 +14,8 @@ export class AdoptionRequestService {
     await this.adoptionRequestRepository.save(request);
     return await this.adoptionRequestRepository.findOneById(request.id);
   }
+
+  async findByShelterId(shelterId: string): Promise<AdoptionRequest[]> {
+    return await this.adoptionRequestRepository.findByShelterID(shelterId);
+  }
 }

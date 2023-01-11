@@ -40,8 +40,4 @@ describe('OwnerController (e2e)', () => {
       pet.information,
     );
   });
-
-  afterEach(async () => {
-    await app.close();
-  });
 });
