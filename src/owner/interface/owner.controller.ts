@@ -38,16 +38,16 @@ export class OwnerController {
     };
   }
 
-  @Put('/:id')
+  @Put('/shelter/:id/pet')
   async addPet(@Param('id') id: OwnerID, @Body() addPetBody: AddPetBody) {
-    const owner = await this.ownerService.addPet({
+    const shelter = await this.ownerService.addPet({
       id,
       petInformations: addPetBody.pets,
     });
 
     return {
       success: true,
-      owner,
+      pets: shelter.getPetLists(),
     };
   }
 }

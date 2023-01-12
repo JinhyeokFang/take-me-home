@@ -23,7 +23,7 @@ describe('AdoptionRequestController (e2e)', () => {
       .expect(201);
   });
 
-  it('/adoption-request/shelter/shelter-id (GET)', async () => {
+  it('/adoption-request/shelter/:shelter-id (GET)', async () => {
     const shelterId = randomUUID();
     await request(app.getHttpServer()).post('/adoption-request').send({
       requestorId: '1',
@@ -31,11 +31,10 @@ describe('AdoptionRequestController (e2e)', () => {
       petId: '3',
     });
 
-    const id = (
-      await request(app.getHttpServer()).get(
-        '/adoption-request/shelter/' + shelterId,
-      )
-    ).body.requests[0].id;
+    const req = await request(app.getHttpServer()).get(
+      '/adoption-request/shelter/' + shelterId,
+    );
+    const id = req.body.requests[0].id;
 
     return request(app.getHttpServer())
       .get('/adoption-request/shelter/' + shelterId)

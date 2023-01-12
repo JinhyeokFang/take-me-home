@@ -49,6 +49,6 @@ export class AdoptionRequestMysqlRepository
 
   async save(adoptionRequest: AdoptionRequest): Promise<void> {
     const entity = AdoptionRequestEntity.create(adoptionRequest);
-    this.rawRepository.save(entity);
+    await this.rawRepository.save(entity);
   }
 }
