@@ -4,13 +4,17 @@ import { Repository } from 'typeorm';
 import { Owner } from '../domain/owner';
 import { OwnerID } from '../domain/owner-id';
 import { OwnerRepository } from '../domain/owner.repository';
+import { PetID } from '../domain/pet/pet-id';
 import { OwnerEntity } from './owner.entity';
+import { PetEntity } from './pet.entity';
 
 @Injectable()
 export class OwnerMysqlRepository implements OwnerRepository {
   constructor(
     @InjectRepository(OwnerEntity)
     private readonly rawOwnerRepo: Repository<OwnerEntity>,
+    @InjectRepository(PetEntity)
+    private readonly petRepo: Repository<PetEntity>,
   ) {}
 
   async save(owner: Owner): Promise<Owner> {
@@ -25,5 +29,9 @@ export class OwnerMysqlRepository implements OwnerRepository {
     });
     const owner = OwnerEntity.toDomain(ownerEntity);
     return owner;
+  }
+
+  async deletePetById(ownerId: OwnerID, petId: PetID): Promise<void> {
+    await this.petRepo.delete(petId);
   }
 }

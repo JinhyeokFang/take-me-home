@@ -17,7 +17,7 @@ describe('AdoptionRequestEventListener', () => {
 
   beforeEach(async () => {
     ownerFactory = new OwnerFactory();
-    ownerMysqlRepository = new OwnerMysqlRepository(null);
+    ownerMysqlRepository = new OwnerMysqlRepository(null, null);
     listener = new AdoptionRequestEventListener(ownerMysqlRepository);
 
     mockedSave = jest

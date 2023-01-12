@@ -13,7 +13,7 @@ describe('OwnerService', () => {
 
   beforeEach(async () => {
     ownerFactory = new OwnerFactory();
-    ownerMysqlRepository = new OwnerMysqlRepository(null);
+    ownerMysqlRepository = new OwnerMysqlRepository(null, null);
     ownerService = new OwnerService(ownerMysqlRepository);
 
     mockedSave = jest

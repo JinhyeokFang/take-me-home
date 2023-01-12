@@ -5,6 +5,7 @@ import { OwnerEntity } from './owner.entity';
 import { OwnerMysqlRepository } from './owner.mysql.repository';
 import { OwnerType } from '../domain/owner-type';
 import { OwnerFactory } from '../domain/owner.factory';
+import { PetEntity } from './pet.entity';
 
 describe('OwnerMysqlRepository', () => {
   let rawRepository: Repository<OwnerEntity>;
@@ -16,7 +17,10 @@ describe('OwnerMysqlRepository', () => {
 
   beforeAll(async () => {
     rawRepository = new Repository<OwnerEntity>(null, null);
-    ownerRepository = new OwnerMysqlRepository(rawRepository);
+    ownerRepository = new OwnerMysqlRepository(
+      rawRepository,
+      new Repository<PetEntity>(null, null),
+    );
   });
 
   beforeEach(async () => {
