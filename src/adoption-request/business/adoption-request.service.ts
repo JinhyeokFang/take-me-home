@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { AdoptionRequest } from '../domain/adoption-request';
 import { RequestData } from '../domain/request-data';
 import { AdoptionRequestMysqlRepository } from '../infrastructure/adoption-request.mysql.repository';
@@ -7,6 +8,7 @@ import { AdoptionRequestMysqlRepository } from '../infrastructure/adoption-reque
 export class AdoptionRequestService {
   constructor(
     private readonly adoptionRequestRepository: AdoptionRequestMysqlRepository,
+    private readonly eventEmitter: EventEmitter2,
   ) {}
 
   async create(requestData: RequestData): Promise<AdoptionRequest> {
@@ -22,6 +24,7 @@ export class AdoptionRequestService {
   async acceptRequest(requestId: string): Promise<void> {
     const request = await this.adoptionRequestRepository.findOneById(requestId);
     request.accept();
+    this.eventEmitter.emit('adoption-request.accepted', request);
     await this.adoptionRequestRepository.save(request);
   }
 

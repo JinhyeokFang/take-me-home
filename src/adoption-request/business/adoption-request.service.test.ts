@@ -1,3 +1,4 @@
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { AdoptionRequest } from '../domain/adoption-request';
 import { RequestData } from '../domain/request-data';
 import { RequestState } from '../domain/request-state';
@@ -16,7 +17,7 @@ describe('AdoptionRequestService', () => {
   beforeEach(async () => {
     requests = [];
     repository = new AdoptionRequestMysqlRepository(null);
-    service = new AdoptionRequestService(repository);
+    service = new AdoptionRequestService(repository, new EventEmitter2());
 
     mockedSave = jest
       .spyOn(repository, 'save')
