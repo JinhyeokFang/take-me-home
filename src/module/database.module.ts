@@ -32,9 +32,12 @@ export class DatabaseModule {
     return TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
-        return DatabaseModule.getModuleOption(
-          configService,
-        ) as TypeOrmModuleOptions;
+        return {
+          ...(DatabaseModule.getModuleOption(
+            configService,
+          ) as TypeOrmModuleOptions),
+          autoLoadEntities: true,
+        };
       },
       inject: [ConfigService],
     });
