@@ -12,7 +12,7 @@ describe('OwnerController (e2e)', () => {
   });
 
   it('/owner (POST)', async () => {
-    return request(app.getHttpServer()).post('/owner').send({}).expect(201);
+    return request(app.getHttpServer()).post(`/owner`).send({}).expect(201);
   });
 
   it('/owner/:id (GET)', async () => {
@@ -31,7 +31,7 @@ describe('OwnerController (e2e)', () => {
     const pet = new Pet();
 
     const response = await request(app.getHttpServer())
-      .put('/owner/shelter/' + ownerId + '/pet')
+      .put(`/owner/shelter/${ownerId}/pet`)
       .send({
         pets: [pet.information],
       });
@@ -47,13 +47,13 @@ describe('OwnerController (e2e)', () => {
     const pet = new Pet();
 
     await request(app.getHttpServer())
-      .put('/owner/shelter/' + ownerId + '/pet')
+      .put(`/owner/shelter/${ownerId}/pet`)
       .send({
         pets: [pet.information],
       });
 
     return request(app.getHttpServer())
-      .delete('/owner/shelter/' + ownerId + '/pet/' + pet.id)
+      .delete(`/owner/shelter/${ownerId}/pet/${pet.id}`)
       .expect(200)
       .expect({
         success: true,

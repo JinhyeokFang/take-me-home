@@ -14,7 +14,7 @@ describe('AdoptionRequestController (e2e)', () => {
 
   it('/adoption-request (POST)', async () => {
     return request(app.getHttpServer())
-      .post('/adoption-request')
+      .post(`/adoption-request`)
       .send({
         requestData: {
           requestorId: '1',
@@ -28,7 +28,7 @@ describe('AdoptionRequestController (e2e)', () => {
   it('/adoption-request/shelter/:shelter-id (GET)', async () => {
     const shelterId = randomUUID();
     await request(app.getHttpServer())
-      .post('/adoption-request')
+      .post(`/adoption-request`)
       .send({
         requestData: {
           requestorId: '1',
@@ -38,12 +38,12 @@ describe('AdoptionRequestController (e2e)', () => {
       });
 
     const req = await request(app.getHttpServer()).get(
-      '/adoption-request/shelter/' + shelterId,
+      `/adoption-request/shelter/${shelterId}`,
     );
     const id = req.body.requests[0].id;
 
     return request(app.getHttpServer())
-      .get('/adoption-request/shelter/' + shelterId)
+      .get(`/adoption-request/shelter/${shelterId}`)
       .expect(200)
       .expect({
         success: true,
@@ -63,7 +63,7 @@ describe('AdoptionRequestController (e2e)', () => {
 
   it('/:requestId/state (PATCH)', async () => {
     const saveRequest = await request(app.getHttpServer())
-      .post('/adoption-request')
+      .post(`/adoption-request`)
       .send({
         requestData: {
           requestorId: '1',
@@ -75,7 +75,7 @@ describe('AdoptionRequestController (e2e)', () => {
     const requestId = saveRequest.body.request.id;
 
     await request(app.getHttpServer())
-      .patch('/adoption-request/' + requestId + '/state')
+      .patch(`/adoption-request/${requestId}/state`)
       .send({
         accept: true,
       })
@@ -85,7 +85,7 @@ describe('AdoptionRequestController (e2e)', () => {
       });
 
     return request(app.getHttpServer())
-      .get('/adoption-request/' + requestId)
+      .get(`/adoption-request/${requestId}`)
       .expect(200)
       .expect({
         success: true,
