@@ -38,4 +38,25 @@ describe('OwnerController (e2e)', () => {
 
     expect(response.body.pets[0].information).toStrictEqual(pet.information);
   });
+
+  it('/owner/shelter/:id/pet/:pet-id (DELETE)', async () => {
+    const saveRequest = await request(app.getHttpServer())
+      .post('/owner')
+      .send({});
+    const ownerId = saveRequest.body.owner.id;
+    const pet = new Pet();
+
+    await request(app.getHttpServer())
+      .put('/owner/shelter/' + ownerId + '/pet')
+      .send({
+        pets: [pet.information],
+      });
+
+    return request(app.getHttpServer())
+      .delete('/owner/shelter/' + ownerId + '/pet/' + pet.id)
+      .expect(200)
+      .expect({
+        success: true,
+      });
+  });
 });

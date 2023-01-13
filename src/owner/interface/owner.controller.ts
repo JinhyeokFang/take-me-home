@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { OwnerService } from '../business/owner.service';
 import { OwnerID } from '../domain/owner-id';
 import { OwnerType } from '../domain/owner-type';
@@ -48,6 +56,15 @@ export class OwnerController {
     return {
       success: true,
       pets: shelter.getPetLists(),
+    };
+  }
+
+  @Delete('/shelter/:id/pet/:petId')
+  async deletePet(@Param('id') id: OwnerID, @Param('petId') petId: string) {
+    await this.ownerService.deletePet(id, petId);
+
+    return {
+      success: true,
     };
   }
 }

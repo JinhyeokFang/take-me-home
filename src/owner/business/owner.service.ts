@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { OwnerID } from '../domain/owner-id';
 import { OwnerRepository } from '../domain/owner.repository';
+import { PetID } from '../domain/pet/pet-id';
 import { Shelter } from '../domain/shelter';
 import { OwnerMysqlRepository } from '../infrastructure/owner.mysql.repository';
 import { AddPetDTO } from './dto/add-pet.dto';
@@ -30,5 +32,9 @@ export class OwnerService {
       }
     }
     return await this.ownerRepository.save(owner);
+  }
+
+  async deletePet(id: OwnerID, petId: PetID) {
+    await this.ownerRepository.deletePetById(id, petId);
   }
 }
