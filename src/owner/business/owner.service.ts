@@ -29,6 +29,8 @@ export class OwnerService {
     for (const information of dto.petInformations) {
       if (owner instanceof Shelter) {
         (owner as Shelter).createNewPet(information);
+      } else {
+        throw new Error('id is not ShelterID');
       }
     }
     return await this.ownerRepository.save(owner);
