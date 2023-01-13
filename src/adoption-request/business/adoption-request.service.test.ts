@@ -5,7 +5,7 @@ import { AdoptionRequestMysqlRepository } from '../infrastructure/adoption-reque
 import { AdoptionRequestService } from './adoption-request.service';
 
 describe('AdoptionRequestService', () => {
-  let request: AdoptionRequest;
+  let requests: AdoptionRequest[] = [];
   let repository: AdoptionRequestMysqlRepository;
   let service: AdoptionRequestService;
 
@@ -14,25 +14,34 @@ describe('AdoptionRequestService', () => {
   let mockedFindOneByShelterID: jest.SpyInstance;
 
   beforeEach(async () => {
+    requests = [];
     repository = new AdoptionRequestMysqlRepository(null);
     service = new AdoptionRequestService(repository);
 
     mockedSave = jest
       .spyOn(repository, 'save')
       .mockImplementation(async (receivedRequest: AdoptionRequest) => {
-        request = receivedRequest;
+        const index = receivedRequest.id;
+        const findIndex = requests.findIndex((request) => request.id === index);
+        if (findIndex === -1) {
+          requests.push(receivedRequest);
+        } else {
+          requests[findIndex] = receivedRequest;
+        }
       });
 
     mockedFindOneById = jest
       .spyOn(repository, 'findOneById')
-      .mockImplementation(async () => {
-        return request;
+      .mockImplementation(async (id) => {
+        return requests.find((req) => req.id === id);
       });
 
     mockedFindOneByShelterID = jest
       .spyOn(repository, 'findByShelterID')
-      .mockImplementation(async () => {
-        return [request];
+      .mockImplementation(async (shelterId) => {
+        return requests.filter(
+          (req) => req.requestData.shelterId === shelterId,
+        );
       });
   });
 
@@ -66,5 +75,55 @@ describe('AdoptionRequestService', () => {
 
     expect(adoptionRequests).toStrictEqual([adoptionRequest]);
     expect(mockedFindOneByShelterID).toBeCalled();
+  });
+
+  it('AdoptionRequestService.acceptRequest(id)', async () => {
+    const requestData: RequestData = {
+      requestorId: 'Requestor-id',
+      shelterId: 'Shelter-id',
+      petId: 'Pet-id',
+    };
+
+    const adoptionRequest: AdoptionRequest = await service.create(requestData);
+    await service.acceptRequest(adoptionRequest.id);
+
+    expect(mockedSave).toBeCalled();
+    expect(mockedFindOneById).toBeCalled();
+
+    const updatedRequest = await service.findOneById(adoptionRequest.id);
+    const state = updatedRequest.state;
+    expect(state).toBe(RequestState.ACCEPTED);
+  });
+
+  it('AdoptionRequestService.rejectRequest(id)', async () => {
+    const requestData: RequestData = {
+      requestorId: 'Requestor-id',
+      shelterId: 'Shelter-id',
+      petId: 'Pet-id',
+    };
+
+    const adoptionRequest: AdoptionRequest = await service.create(requestData);
+    await service.rejectRequest(adoptionRequest.id);
+
+    expect(mockedSave).toBeCalled();
+    expect(mockedFindOneById).toBeCalled();
+
+    const updatedRequest = await service.findOneById(adoptionRequest.id);
+    const state = updatedRequest.state;
+    expect(state).toBe(RequestState.REJECTED);
+  });
+
+  it('AdoptionRequestService.findOneById(id)', async () => {
+    const requestData: RequestData = {
+      requestorId: 'Requestor-id',
+      shelterId: 'Shelter-id',
+      petId: 'Pet-id',
+    };
+
+    const adoptionRequest: AdoptionRequest = await service.create(requestData);
+    const request = await service.findOneById(adoptionRequest.id);
+
+    expect(request).toStrictEqual(adoptionRequest);
+    expect(mockedFindOneById).toBeCalled();
   });
 });

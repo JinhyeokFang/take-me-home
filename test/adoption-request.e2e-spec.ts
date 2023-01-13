@@ -54,4 +54,38 @@ describe('AdoptionRequestController (e2e)', () => {
         ],
       });
   });
+
+  it('/:requestId/state (PATCH)', async () => {
+    const saveRequest = await request(app.getHttpServer())
+      .post('/adoption-request')
+      .send({
+        requestorId: '1',
+        shelterId: '2',
+        petId: '3',
+      });
+
+    const requestId = saveRequest.body.request.id;
+
+    await request(app.getHttpServer())
+      .patch('/adoption-request/' + requestId + '/state')
+      .send({
+        accept: true,
+      })
+      .expect(200)
+      .expect({
+        success: true,
+      });
+
+    return request(app.getHttpServer())
+      .get('/adoption-request/' + requestId)
+      .expect(200)
+      .expect({
+        success: true,
+        request: {
+          requestData: saveRequest.body.request.requestData,
+          id: requestId,
+          requestState: RequestState.ACCEPTED,
+        },
+      });
+  });
 });

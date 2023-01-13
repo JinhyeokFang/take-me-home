@@ -18,4 +18,20 @@ export class AdoptionRequestService {
   async findByShelterId(shelterId: string): Promise<AdoptionRequest[]> {
     return await this.adoptionRequestRepository.findByShelterID(shelterId);
   }
+
+  async acceptRequest(requestId: string): Promise<void> {
+    const request = await this.adoptionRequestRepository.findOneById(requestId);
+    request.accept();
+    await this.adoptionRequestRepository.save(request);
+  }
+
+  async rejectRequest(requestId: string): Promise<void> {
+    const request = await this.adoptionRequestRepository.findOneById(requestId);
+    request.reject();
+    await this.adoptionRequestRepository.save(request);
+  }
+
+  async findOneById(requestId: string): Promise<AdoptionRequest> {
+    return await this.adoptionRequestRepository.findOneById(requestId);
+  }
 }
