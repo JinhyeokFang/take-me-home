@@ -52,10 +52,13 @@ exports.OwnerMysqlRepository = void 0;
 var common_1 = require("@nestjs/common");
 var typeorm_1 = require("@nestjs/typeorm");
 var typeorm_2 = require("typeorm");
+var owner_type_1 = require("../domain/owner-type");
 var owner_entity_1 = require("./owner.entity");
+var pet_entity_1 = require("./pet.entity");
 var OwnerMysqlRepository = /** @class */ (function () {
-    function OwnerMysqlRepository(rawOwnerRepo) {
+    function OwnerMysqlRepository(rawOwnerRepo, petRepo) {
         this.rawOwnerRepo = rawOwnerRepo;
+        this.petRepo = petRepo;
     }
     OwnerMysqlRepository.prototype.save = function (owner) {
         return __awaiter(this, void 0, void 0, function () {
@@ -88,10 +91,40 @@ var OwnerMysqlRepository = /** @class */ (function () {
             });
         });
     };
+    OwnerMysqlRepository.prototype.deletePetById = function (ownerId, petId) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.petRepo.delete(petId)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    OwnerMysqlRepository.prototype.findShelter = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var ownerEntities, shelters;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.rawOwnerRepo.find({
+                            where: { type: owner_type_1.OwnerType.SHELTER },
+                        })];
+                    case 1:
+                        ownerEntities = _a.sent();
+                        shelters = ownerEntities.map(owner_entity_1.OwnerEntity.toDomain);
+                        return [2 /*return*/, shelters];
+                }
+            });
+        });
+    };
     OwnerMysqlRepository = __decorate([
         (0, common_1.Injectable)(),
         __param(0, (0, typeorm_1.InjectRepository)(owner_entity_1.OwnerEntity)),
-        __metadata("design:paramtypes", [typeorm_2.Repository])
+        __param(1, (0, typeorm_1.InjectRepository)(pet_entity_1.PetEntity)),
+        __metadata("design:paramtypes", [typeorm_2.Repository,
+            typeorm_2.Repository])
     ], OwnerMysqlRepository);
     return OwnerMysqlRepository;
 }());

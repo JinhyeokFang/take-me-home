@@ -38,28 +38,30 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var typeorm_1 = require("typeorm");
 var pet_1 = require("../domain/pet/pet");
-var owner_1 = require("../domain/owner");
-var test_dummy_information_1 = require("../domain/pet/information/test-dummy-information");
 var owner_entity_1 = require("./owner.entity");
 var owner_mysql_repository_1 = require("./owner.mysql.repository");
 var owner_type_1 = require("../domain/owner-type");
+var owner_factory_1 = require("../domain/owner.factory");
 describe('OwnerMysqlRepository', function () {
     var rawRepository;
     var ownerRepository;
     var owner;
     var mockedSave;
     var mockedFindOneById;
-    var PET_INFORMATION = test_dummy_information_1.DUMMY_INFORMATION;
     beforeAll(function () { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
             rawRepository = new typeorm_1.Repository(null, null);
-            ownerRepository = new owner_mysql_repository_1.OwnerMysqlRepository(rawRepository);
+            ownerRepository = new owner_mysql_repository_1.OwnerMysqlRepository(rawRepository, new typeorm_1.Repository(null, null));
             return [2 /*return*/];
         });
     }); });
     beforeEach(function () { return __awaiter(void 0, void 0, void 0, function () {
+        var ownerFactory;
         return __generator(this, function (_a) {
-            owner = new owner_1.Owner(owner_type_1.OwnerType.SHELTER);
+            ownerFactory = new owner_factory_1.OwnerFactory();
+            owner = ownerFactory.createOwner(owner_type_1.OwnerType.SHELTER, {
+                pets: [new pet_1.Pet()],
+            });
             mockedSave = jest
                 .spyOn(rawRepository, 'save')
                 .mockImplementation(function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -74,17 +76,19 @@ describe('OwnerMysqlRepository', function () {
                     return [2 /*return*/, owner_entity_1.OwnerEntity.create(owner)];
                 });
             }); });
+            jest.spyOn(rawRepository, 'find').mockImplementation(function () { return __awaiter(void 0, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, [owner_entity_1.OwnerEntity.create(owner)]];
+                });
+            }); });
             return [2 /*return*/];
         });
     }); });
     it('OwnerMysqlRepository.save(Owner)', function () { return __awaiter(void 0, void 0, void 0, function () {
-        var pet, ownerFromQuery;
+        var ownerFromQuery;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    pet = new pet_1.Pet(PET_INFORMATION);
-                    owner.adoptPet(pet);
-                    return [4 /*yield*/, ownerRepository.save(owner)];
+                case 0: return [4 /*yield*/, ownerRepository.save(owner)];
                 case 1:
                     _a.sent();
                     return [4 /*yield*/, ownerRepository.findOneById(owner.id)];
@@ -95,6 +99,18 @@ describe('OwnerMysqlRepository', function () {
                     expect(owner.id).toBe(ownerFromQuery.id);
                     expect(owner.type).toBe(ownerFromQuery.type);
                     expect(owner.getPetLists()).toStrictEqual(ownerFromQuery.getPetLists());
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('OwnerMysqlRepository.findShelter()', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var shelters;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, ownerRepository.findShelter()];
+                case 1:
+                    shelters = _a.sent();
+                    expect(shelters).toStrictEqual([owner]);
                     return [2 /*return*/];
             }
         });

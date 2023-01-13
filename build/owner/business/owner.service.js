@@ -47,6 +47,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OwnerService = void 0;
 var common_1 = require("@nestjs/common");
+var shelter_1 = require("../domain/shelter");
 var owner_mysql_repository_1 = require("../infrastructure/owner.mysql.repository");
 var OwnerService = /** @class */ (function () {
     function OwnerService(ownerRepository) {
@@ -76,18 +77,42 @@ var OwnerService = /** @class */ (function () {
     };
     OwnerService.prototype.addPet = function (dto) {
         return __awaiter(this, void 0, void 0, function () {
-            var owner, _i, _a, pet;
+            var owner, _i, _a, information;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, this.ownerRepository.findOneById(dto.id)];
                     case 1:
                         owner = _b.sent();
-                        for (_i = 0, _a = dto.pets; _i < _a.length; _i++) {
-                            pet = _a[_i];
-                            owner.adoptPet(pet);
+                        for (_i = 0, _a = dto.petInformations; _i < _a.length; _i++) {
+                            information = _a[_i];
+                            if (owner instanceof shelter_1.Shelter) {
+                                owner.createNewPet(information);
+                            }
                         }
                         return [4 /*yield*/, this.ownerRepository.save(owner)];
                     case 2: return [2 /*return*/, _b.sent()];
+                }
+            });
+        });
+    };
+    OwnerService.prototype.deletePet = function (id, petId) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.ownerRepository.deletePetById(id, petId)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    OwnerService.prototype.findShelter = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.ownerRepository.findShelter()];
+                    case 1: return [2 /*return*/, _a.sent()];
                 }
             });
         });

@@ -46,6 +46,8 @@ exports.AppModule = void 0;
 var common_1 = require("@nestjs/common");
 var config_1 = require("@nestjs/config");
 var core_1 = require("@nestjs/core");
+var event_emitter_1 = require("@nestjs/event-emitter");
+var adoption_request_module_1 = require("./adoption-request/adoption-request.module");
 var database_module_1 = require("./module/database.module");
 var env_config_module_1 = require("./module/env-config.module");
 var owner_module_1 = require("./owner/owner.module");
@@ -74,8 +76,10 @@ var AppModule = /** @class */ (function () {
     AppModule.metadata = {
         imports: [
             owner_module_1.OwnerModule,
+            adoption_request_module_1.AdoptionRequestModule,
             env_config_module_1.EnvConfigModule.getModule(),
             database_module_1.DatabaseModule.getModule(),
+            event_emitter_1.EventEmitterModule.forRoot(),
         ],
         controllers: [],
         providers: [],

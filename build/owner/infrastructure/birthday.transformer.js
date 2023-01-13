@@ -25,7 +25,7 @@ var BirthdayTransformer = /** @class */ (function () {
     BirthdayTransformer.prototype.zeroFill = function (str, length) {
         var zeroStringLength = str.length - length;
         if (zeroStringLength < 0) {
-            throw new Error('str should be longer than length');
+            return str;
         }
         var zeroString = '0'.repeat(zeroStringLength);
         return zeroString + str;

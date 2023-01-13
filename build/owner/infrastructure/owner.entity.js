@@ -11,9 +11,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OwnerEntity = void 0;
 var typeorm_1 = require("typeorm");
-var owner_1 = require("../domain/owner");
 var owner_type_1 = require("../domain/owner-type");
 var pet_entity_1 = require("./pet.entity");
+var owner_factory_1 = require("../domain/owner.factory");
 var OwnerEntity = /** @class */ (function () {
     function OwnerEntity() {
     }
@@ -26,14 +26,17 @@ var OwnerEntity = /** @class */ (function () {
         return ownerEntity;
     };
     OwnerEntity.toDomain = function (ownerEntity) {
+        var ownerFactory = new owner_factory_1.OwnerFactory();
         var id = ownerEntity.id;
-        var owner = new owner_1.Owner(ownerEntity.type, id);
+        var pets = [];
         if (ownerEntity.pets)
-            ownerEntity.pets.forEach(function (petEntity) {
-                var pet = pet_entity_1.PetEntity.toDomain(petEntity);
-                owner.adoptPet(pet);
+            pets = ownerEntity.pets.map(function (petEntity) {
+                return pet_entity_1.PetEntity.toDomain(petEntity);
             });
-        return owner;
+        return ownerFactory.createOwner(ownerEntity.type, {
+            pets: pets,
+            id: id,
+        });
     };
     var OwnerEntity_1;
     __decorate([

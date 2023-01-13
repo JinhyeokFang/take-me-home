@@ -36,17 +36,22 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var owner_1 = require("../domain/owner");
+var owner_type_1 = require("../domain/owner-type");
+var owner_factory_1 = require("../domain/owner.factory");
 var owner_mysql_repository_1 = require("../infrastructure/owner.mysql.repository");
 var owner_service_1 = require("./owner.service");
 describe('OwnerService', function () {
+    var owner;
+    var ownerFactory;
     var ownerMysqlRepository;
     var ownerService;
     var mockedSave;
     var mockedFindOneById;
     beforeEach(function () { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            ownerMysqlRepository = new owner_mysql_repository_1.OwnerMysqlRepository(null);
+            ownerFactory = new owner_factory_1.OwnerFactory();
+            owner = ownerFactory.createOwner(owner_type_1.OwnerType.SHELTER);
+            ownerMysqlRepository = new owner_mysql_repository_1.OwnerMysqlRepository(null, null);
             ownerService = new owner_service_1.OwnerService(ownerMysqlRepository);
             mockedSave = jest
                 .spyOn(ownerMysqlRepository, 'save')
@@ -59,7 +64,14 @@ describe('OwnerService', function () {
                 .spyOn(ownerMysqlRepository, 'findOneById')
                 .mockImplementation(function () { return __awaiter(void 0, void 0, void 0, function () {
                 return __generator(this, function (_a) {
-                    return [2 /*return*/, new owner_1.Owner()];
+                    return [2 /*return*/, owner];
+                });
+            }); });
+            jest
+                .spyOn(ownerMysqlRepository, 'findShelter')
+                .mockImplementation(function () { return __awaiter(void 0, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, [owner]];
                 });
             }); });
             return [2 /*return*/];
@@ -70,7 +82,7 @@ describe('OwnerService', function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    owner = new owner_1.Owner();
+                    owner = ownerFactory.createOwner(owner_type_1.OwnerType.INDIVIDUAL);
                     return [4 /*yield*/, ownerService.save({
                             owner: owner,
                         })];
@@ -99,12 +111,24 @@ describe('OwnerService', function () {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, ownerService.addPet({
                         id: '',
-                        pets: [],
+                        petInformations: [],
                     })];
                 case 1:
                     _a.sent();
                     expect(mockedSave).toBeCalled();
                     expect(mockedFindOneById).toBeCalledTimes(1);
+                    return [2 /*return*/];
+            }
+        });
+    }); });
+    it('OwnerService.findShelter()', function () { return __awaiter(void 0, void 0, void 0, function () {
+        var shelters;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, ownerService.findShelter()];
+                case 1:
+                    shelters = _a.sent();
+                    expect(shelters).toStrictEqual([owner]);
                     return [2 /*return*/];
             }
         });

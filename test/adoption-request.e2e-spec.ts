@@ -16,20 +16,26 @@ describe('AdoptionRequestController (e2e)', () => {
     return request(app.getHttpServer())
       .post('/adoption-request')
       .send({
-        requestorId: '1',
-        shelterId: '2',
-        petId: '3',
+        requestData: {
+          requestorId: '1',
+          shelterId: '2',
+          petId: '3',
+        },
       })
       .expect(201);
   });
 
   it('/adoption-request/shelter/:shelter-id (GET)', async () => {
     const shelterId = randomUUID();
-    await request(app.getHttpServer()).post('/adoption-request').send({
-      requestorId: '1',
-      shelterId,
-      petId: '3',
-    });
+    await request(app.getHttpServer())
+      .post('/adoption-request')
+      .send({
+        requestData: {
+          requestorId: '1',
+          shelterId,
+          petId: '3',
+        },
+      });
 
     const req = await request(app.getHttpServer()).get(
       '/adoption-request/shelter/' + shelterId,
@@ -59,9 +65,11 @@ describe('AdoptionRequestController (e2e)', () => {
     const saveRequest = await request(app.getHttpServer())
       .post('/adoption-request')
       .send({
-        requestorId: '1',
-        shelterId: '2',
-        petId: '3',
+        requestData: {
+          requestorId: '1',
+          shelterId: '2',
+          petId: '3',
+        },
       });
 
     const requestId = saveRequest.body.request.id;

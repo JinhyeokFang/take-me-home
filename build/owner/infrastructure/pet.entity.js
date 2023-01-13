@@ -66,7 +66,7 @@ var PetEntity = /** @class */ (function () {
         (0, typeorm_1.Column)({
             type: 'enum',
             enum: gender_1.Gender,
-            default: gender_1.Gender.Male,
+            default: gender_1.Gender.MALE,
         }),
         __metadata("design:type", Number)
     ], PetEntity.prototype, "gender", void 0);
@@ -74,7 +74,7 @@ var PetEntity = /** @class */ (function () {
         (0, typeorm_1.Column)({
             type: 'enum',
             enum: species_1.Species,
-            default: species_1.Species.Dog,
+            default: species_1.Species.DOG,
         }),
         __metadata("design:type", Number)
     ], PetEntity.prototype, "species", void 0);

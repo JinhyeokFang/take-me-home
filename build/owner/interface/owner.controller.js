@@ -51,18 +51,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.OwnerController = void 0;
 var common_1 = require("@nestjs/common");
 var owner_service_1 = require("../business/owner.service");
-var owner_1 = require("../domain/owner");
+var owner_type_1 = require("../domain/owner-type");
+var owner_factory_1 = require("../domain/owner.factory");
 var OwnerController = /** @class */ (function () {
     function OwnerController(ownerService) {
         this.ownerService = ownerService;
     }
     OwnerController.prototype.createOwner = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var owner;
+            var ownerFactory, owner;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        owner = new owner_1.Owner();
+                        ownerFactory = new owner_factory_1.OwnerFactory();
+                        owner = ownerFactory.createOwner(owner_type_1.OwnerType.SHELTER);
                         return [4 /*yield*/, this.ownerService.save({
                                 owner: owner,
                             })];
@@ -74,6 +76,22 @@ var OwnerController = /** @class */ (function () {
                                     id: owner.id,
                                     pets: owner.getPetLists(),
                                 },
+                            }];
+                }
+            });
+        });
+    };
+    OwnerController.prototype.getShelters = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var shelters;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.ownerService.findShelter()];
+                    case 1:
+                        shelters = _a.sent();
+                        return [2 /*return*/, {
+                                success: true,
+                                shelters: shelters,
                             }];
                 }
             });
@@ -99,18 +117,32 @@ var OwnerController = /** @class */ (function () {
     };
     OwnerController.prototype.addPet = function (id, addPetBody) {
         return __awaiter(this, void 0, void 0, function () {
-            var owner;
+            var shelter;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.ownerService.addPet({
                             id: id,
-                            pets: addPetBody.pets,
+                            petInformations: addPetBody.pets,
                         })];
                     case 1:
-                        owner = _a.sent();
+                        shelter = _a.sent();
                         return [2 /*return*/, {
                                 success: true,
-                                owner: owner,
+                                pets: shelter.getPetLists(),
+                            }];
+                }
+            });
+        });
+    };
+    OwnerController.prototype.deletePet = function (id, petId) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.ownerService.deletePet(id, petId)];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, {
+                                success: true,
                             }];
                 }
             });
@@ -123,18 +155,34 @@ var OwnerController = /** @class */ (function () {
         __metadata("design:returntype", Promise)
     ], OwnerController.prototype, "createOwner", null);
     __decorate([
+        (0, common_1.Get)('/shelter'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", Promise)
+    ], OwnerController.prototype, "getShelters", null);
+    __decorate([
         (0, common_1.Get)('/:id'),
+        __param(0, (0, common_1.Param)('id')),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [String]),
         __metadata("design:returntype", Promise)
     ], OwnerController.prototype, "findOne", null);
     __decorate([
-        (0, common_1.Put)('/:id'),
+        (0, common_1.Put)('/shelter/:id/pet'),
+        __param(0, (0, common_1.Param)('id')),
         __param(1, (0, common_1.Body)()),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [String, Object]),
         __metadata("design:returntype", Promise)
     ], OwnerController.prototype, "addPet", null);
+    __decorate([
+        (0, common_1.Delete)('/shelter/:id/pet/:petId'),
+        __param(0, (0, common_1.Param)('id')),
+        __param(1, (0, common_1.Param)('petId')),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [String, String]),
+        __metadata("design:returntype", Promise)
+    ], OwnerController.prototype, "deletePet", null);
     OwnerController = __decorate([
         (0, common_1.Controller)('owner'),
         __metadata("design:paramtypes", [owner_service_1.OwnerService])

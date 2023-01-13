@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { AdoptionRequestService } from '../business/adoption-request.service';
 import { AdoptionRequest } from '../domain/adoption-request';
-import { RequestData } from '../domain/request-data';
 import { RequestID } from '../domain/request-id';
 import { ShelterID } from '../domain/shelter-id';
+import { CreateRequestBody } from './body/create-request.body';
 import { UpdateStateBody } from './body/update-state.body';
 
 @Controller('adoption-request')
@@ -13,8 +13,8 @@ export class AdoptionRequestController {
   ) {}
 
   @Post('/')
-  async createRequest(@Body() requestData: RequestData) {
-    const request = await this.adoptionRequestService.create(requestData);
+  async createRequest(@Body() body: CreateRequestBody) {
+    const request = await this.adoptionRequestService.create(body.requestData);
     return {
       success: true,
       request,

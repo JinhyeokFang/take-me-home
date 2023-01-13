@@ -37,7 +37,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var owner_service_1 = require("../business/owner.service");
-var owner_1 = require("../domain/owner");
+var owner_type_1 = require("../domain/owner-type");
+var owner_factory_1 = require("../domain/owner.factory");
 var owner_controller_1 = require("./owner.controller");
 describe('OwnerController', function () {
     var ownerService;
@@ -47,9 +48,10 @@ describe('OwnerController', function () {
     var mockedFindOneById;
     var mockedAddPet;
     beforeEach(function () {
+        var ownerFactory = new owner_factory_1.OwnerFactory();
+        owner = ownerFactory.createOwner(owner_type_1.OwnerType.SHELTER);
         ownerService = new owner_service_1.OwnerService(null);
         ownerController = new owner_controller_1.OwnerController(ownerService);
-        owner = new owner_1.Owner();
         mockedSave = jest
             .spyOn(ownerService, 'save')
             .mockImplementation(function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -69,7 +71,7 @@ describe('OwnerController', function () {
             .mockImplementation(function (dto) { return __awaiter(void 0, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 expect(dto.id).toBe('1');
-                return [2 /*return*/, new owner_1.Owner()];
+                return [2 /*return*/, owner];
             });
         }); });
     });
