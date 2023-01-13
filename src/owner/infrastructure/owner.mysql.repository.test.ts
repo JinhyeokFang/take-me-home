@@ -38,6 +38,9 @@ describe('OwnerMysqlRepository', () => {
       .mockImplementation(async () => {
         return OwnerEntity.create(owner);
       });
+    jest.spyOn(rawRepository, 'find').mockImplementation(async () => {
+      return [OwnerEntity.create(owner)];
+    });
   });
 
   it('OwnerMysqlRepository.save(Owner)', async () => {
@@ -49,5 +52,10 @@ describe('OwnerMysqlRepository', () => {
     expect(owner.id).toBe(ownerFromQuery.id);
     expect(owner.type).toBe(ownerFromQuery.type);
     expect(owner.getPetLists()).toStrictEqual(ownerFromQuery.getPetLists());
+  });
+
+  it('OwnerMysqlRepository.findShelter()', async () => {
+    const shelters = await ownerRepository.findShelter();
+    expect(shelters).toStrictEqual([owner]);
   });
 });

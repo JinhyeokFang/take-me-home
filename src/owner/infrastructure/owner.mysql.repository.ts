@@ -3,8 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Owner } from '../domain/owner';
 import { OwnerID } from '../domain/owner-id';
+import { OwnerType } from '../domain/owner-type';
 import { OwnerRepository } from '../domain/owner.repository';
 import { PetID } from '../domain/pet/pet-id';
+import { Shelter } from '../domain/shelter';
 import { OwnerEntity } from './owner.entity';
 import { PetEntity } from './pet.entity';
 
@@ -33,5 +35,13 @@ export class OwnerMysqlRepository implements OwnerRepository {
 
   async deletePetById(ownerId: OwnerID, petId: PetID): Promise<void> {
     await this.petRepo.delete(petId);
+  }
+
+  async findShelter(): Promise<Shelter[]> {
+    const ownerEntities = await this.rawOwnerRepo.find({
+      where: { type: OwnerType.SHELTER },
+    });
+    const shelters = ownerEntities.map(OwnerEntity.toDomain);
+    return shelters as Shelter[];
   }
 }

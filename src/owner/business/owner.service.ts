@@ -37,4 +37,8 @@ export class OwnerService {
   async deletePet(id: OwnerID, petId: PetID) {
     await this.ownerRepository.deletePetById(id, petId);
   }
+
+  async findShelter() {
+    return await this.ownerRepository.findShelter();
+  }
 }

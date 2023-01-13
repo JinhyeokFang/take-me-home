@@ -34,6 +34,15 @@ export class OwnerController {
     };
   }
 
+  @Get('/shelter')
+  async getShelters() {
+    const shelters = await this.ownerService.findShelter();
+    return {
+      success: true,
+      shelters,
+    };
+  }
+
   @Get('/:id')
   async findOne(@Param('id') id: OwnerID) {
     const owner = await this.ownerService.findOne({

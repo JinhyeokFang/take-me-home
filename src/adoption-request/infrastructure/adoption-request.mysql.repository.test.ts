@@ -10,7 +10,6 @@ describe('AdoptionRequestMysqlRepository', () => {
   let request: AdoptionRequest;
   let mockedSave: jest.SpyInstance;
   let mockedFindOneById: jest.SpyInstance;
-  let mockedFind: jest.SpyInstance;
 
   beforeAll(async () => {
     rawRepository = new Repository<AdoptionRequestEntity>(null, null);
@@ -32,11 +31,6 @@ describe('AdoptionRequestMysqlRepository', () => {
       .spyOn(rawRepository, 'findOne')
       .mockImplementation(async () => {
         return AdoptionRequestEntity.create(request);
-      });
-    mockedFind = jest
-      .spyOn(rawRepository, 'find')
-      .mockImplementation(async () => {
-        return [AdoptionRequestEntity.create(request)];
       });
   });
 
