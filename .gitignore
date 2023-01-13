@@ -34,9 +34,9 @@ coverage
 !.vscode/launch.json
 !.vscode/extensions.json
 
-TODO.md
-
 .env*
 
 *migration.ts
 migration
+
+build

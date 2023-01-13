@@ -1,5 +1,5 @@
-import { ID } from '../../domain/id';
+import { OwnerID } from '../../domain/owner-id';
 
 export interface FindOneDTO {
-  id: ID;
+  id: OwnerID;
 }
