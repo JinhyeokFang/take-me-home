@@ -1,73 +1,58 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Take-Me-Home: 유기견 입양 서비스 API 서버
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 프로젝트 소개
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### TDD로 DDD를 점진적으로 적용한 유기 반려동물 입양 서비스 API 서버
 
-## Description
+## 사용한 기술/도구
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### 도구
+- Visual Studio Code
+- Git/Github
+- Github Action (CI)
 
-## Installation
+### 기술
+- Typescript & Nest.js
+- TypeOrm
+- Jest & Supertest
 
-```bash
+## 프로젝트 의의
+TDD를 처음으로 웹 서버개발에 적용해봄
+Jest와 Supertest로 자동화된 테스트를 구현
+테스트와 리팩토링을 활용, DDD를 점진적으로 도입
+TypeOrm으로 데이터베이스와 연동, 마이그레이션까지 추가
+
+## 유스케이스
+- Shelter 모두 불러오기
+- Shelter에서 Pet 전체 확인
+- Owner가 입양한 모든 Pet을 확인한다.
+- Shelter로 들어온 입양 신청 내역을 확인한다
+- Shelter가 PetInformation을 입력해 Pet을 등록한다.
+- PetID를 입력받아 Shelter에서 Pet을 삭제
+- Owner가 Shelter와 Pet을 입력, 입양을 신청한다.
+- 입양 신청 내역 ID를 입력, 승인또는 거절한다.
+
+## 프로젝트 설치 방법
+
+``` bash
 $ npm install
+$ npm run prepare
 ```
 
-## Running the app
+설치가 완료되면 .env, .env.development, .env.test 파일을 생성 후 아래의 환경변수를 설정해주세요.
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+``` bash
+PORT=
+DATABASE_HOST=
+DATABASE_PORT=
+DATABASE_PASSWORD=
+DATABASE_USERNAME=
+DATABASE_NAME=
+DATABASE_SYNCHRONIZE=
 ```
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+## 개선이 필요한 부분
+- 더 많은 유스케이스
+- 더 많은 테스트
+- 예외처리 추가
+- Continuous Deployment를 적용한 자동 무중단 배포 (using AWS EC2)
