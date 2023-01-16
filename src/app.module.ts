@@ -15,7 +15,9 @@ export class AppModule {
       AdoptionRequestModule,
       EnvConfigModule.getModule(),
       DatabaseModule.getModule(),
-      EventEmitterModule.forRoot(),
+      EventEmitterModule.forRoot({
+        global: true,
+      }),
     ],
     controllers: [],
     providers: [],

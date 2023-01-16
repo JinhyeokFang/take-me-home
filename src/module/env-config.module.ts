@@ -5,12 +5,7 @@ export class EnvConfigModule {
   static getModule(): DynamicModule {
     return ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath:
-        process.env['NODE_ENV'] === 'production'
-          ? '.env'
-          : process.env['NODE_ENV'] === 'test'
-          ? '.env.test'
-          : '.env.development',
+      envFilePath: '.env',
     });
   }
 }
