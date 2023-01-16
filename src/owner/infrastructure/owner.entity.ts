@@ -26,10 +26,14 @@ export class OwnerEntity {
   })
   type: OwnerType;
 
-  @Column()
+  @Column({
+    default: '',
+  })
   name: string;
 
-  @Column()
+  @Column({
+    default: '',
+  })
   phoneNumber: PhoneNumber;
 
   @Column(() => Address)

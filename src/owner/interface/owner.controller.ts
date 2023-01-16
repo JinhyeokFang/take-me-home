@@ -9,18 +9,29 @@ import {
 } from '@nestjs/common';
 import { OwnerService } from '../business/owner.service';
 import { OwnerID } from '../domain/owner-id';
-import { OwnerType } from '../domain/owner-type';
 import { OwnerFactory } from '../domain/owner.factory';
 import { AddPetBody } from './body/add-pet.body';
+import { CreateOwnerBody } from './body/create-owner.body';
 
 @Controller('owner')
 export class OwnerController {
   constructor(private readonly ownerService: OwnerService) {}
 
   @Post('/')
-  async createOwner() {
+  async createOwner(@Body() createOwnerBody: CreateOwnerBody) {
     const ownerFactory = new OwnerFactory();
-    const owner = ownerFactory.createOwner(OwnerType.SHELTER);
+    const owner = ownerFactory.createOwner(createOwnerBody.type, {
+      data: {
+        name: createOwnerBody.name,
+        phoneNumber: createOwnerBody.phoneNumber,
+        address: {
+          city: createOwnerBody.city,
+          street: createOwnerBody.street,
+          zipCode: createOwnerBody.zipCode,
+        },
+      },
+    });
+
     await this.ownerService.save({
       owner,
     });

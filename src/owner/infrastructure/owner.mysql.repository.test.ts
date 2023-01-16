@@ -27,6 +27,15 @@ describe('OwnerMysqlRepository', () => {
     const ownerFactory = new OwnerFactory();
     owner = ownerFactory.createOwner(OwnerType.SHELTER, {
       pets: [new Pet()],
+      data: {
+        name: 'name',
+        phoneNumber: 'phoneNumber',
+        address: {
+          city: 'city',
+          street: 'street',
+          zipCode: 'zipCode',
+        },
+      },
     });
     mockedSave = jest
       .spyOn(rawRepository, 'save')

@@ -7,12 +7,18 @@ export class Address {
     this.zipCode = zipCode;
   }
 
-  @Column()
+  @Column({
+    default: '',
+  })
   city: string;
 
-  @Column()
+  @Column({
+    default: '',
+  })
   street: string;
 
-  @Column()
+  @Column({
+    default: '',
+  })
   zipCode: string;
 }

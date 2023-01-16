@@ -2,6 +2,7 @@ import { INestApplication } from '@nestjs/common';
 import { Pet } from '../src/owner/domain/pet/pet';
 import * as request from 'supertest';
 import { TestModule } from './test.module';
+import { OwnerType } from '../src/owner/domain/owner-type';
 
 describe('OwnerController (e2e)', () => {
   let app: INestApplication;
@@ -12,7 +13,17 @@ describe('OwnerController (e2e)', () => {
   });
 
   it('/owner (POST)', async () => {
-    return request(app.getHttpServer()).post(`/owner`).send({}).expect(201);
+    return request(app.getHttpServer())
+      .post(`/owner`)
+      .send({
+        type: OwnerType.SHELTER,
+        name: 'name',
+        phoneNumber: 'phoneNumber',
+        city: 'city',
+        street: 'street',
+        zipCode: 'zipCode',
+      })
+      .expect(201);
   });
 
   it('/owner/:id (GET)', async () => {
@@ -24,9 +35,14 @@ describe('OwnerController (e2e)', () => {
   });
 
   it('/owner/shelter/:id/pet (PUT)', async () => {
-    const saveRequest = await request(app.getHttpServer())
-      .post('/owner')
-      .send({});
+    const saveRequest = await request(app.getHttpServer()).post('/owner').send({
+      type: OwnerType.SHELTER,
+      name: 'name',
+      phoneNumber: 'phoneNumber',
+      city: 'city',
+      street: 'street',
+      zipCode: 'zipCode',
+    });
     const ownerId = saveRequest.body.owner.id;
     const pet = new Pet();
 
@@ -40,9 +56,14 @@ describe('OwnerController (e2e)', () => {
   });
 
   it('/owner/shelter/:id/pet/:pet-id (DELETE)', async () => {
-    const saveRequest = await request(app.getHttpServer())
-      .post('/owner')
-      .send({});
+    const saveRequest = await request(app.getHttpServer()).post('/owner').send({
+      type: OwnerType.SHELTER,
+      name: 'name',
+      phoneNumber: 'phoneNumber',
+      city: 'city',
+      street: 'street',
+      zipCode: 'zipCode',
+    });
     const ownerId = saveRequest.body.owner.id;
     const pet = new Pet();
 
