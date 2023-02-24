@@ -9,8 +9,8 @@
 ![Nest.js](https://img.shields.io/badge/NestJS-E0234E.svg?&style=for-the-badge&logo=NestJS&logoColor=white)
 ![Jest](https://img.shields.io/badge/Jest-C21325.svg?&style=for-the-badge&logo=Jest&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
-![Supertest](https://img.shields.io/badge/MySQL-000000.svg?&style=for-the-badge&logoColor=white)
-![TypeOrm](https://img.shields.io/badge/MySQL-000000.svg?&style=for-the-badge&logoColor=white)
+![Supertest](https://img.shields.io/badge/Supertest-000000.svg?&style=for-the-badge&logoColor=white)
+![TypeOrm](https://img.shields.io/badge/TypeOrm-000000.svg?&style=for-the-badge&logoColor=white)
  
 ## 프로젝트 의의
 TDD를 처음으로 웹 서버개발에 적용
