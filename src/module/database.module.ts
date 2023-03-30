@@ -37,6 +37,7 @@ export class DatabaseModule {
             configService,
           ) as TypeOrmModuleOptions),
           autoLoadEntities: true,
+          global: true,
         };
       },
       inject: [ConfigService],

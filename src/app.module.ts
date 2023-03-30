@@ -5,6 +5,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 import { AdoptionRequestModule } from './adoption-request/adoption-request.module';
 import { DatabaseModule } from './module/database.module';
 import { EnvConfigModule } from './module/env-config.module';
+import { TransactionManager } from './module/transaction-manager';
 import { OwnerModule } from './owner/owner.module';
 
 @Module(AppModule.metadata)
@@ -20,7 +21,7 @@ export class AppModule {
       }),
     ],
     controllers: [],
-    providers: [],
+    providers: [TransactionManager],
   };
 
   static async runApplication(): Promise<void> {

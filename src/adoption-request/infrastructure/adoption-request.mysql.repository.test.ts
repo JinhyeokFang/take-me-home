@@ -1,10 +1,10 @@
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { AdoptionRequest } from '../domain/adoption-request';
 import { AdoptionRequestEntity } from './adoption-request.entity';
 import { AdoptionRequestMysqlRepository } from './adoption-request.mysql.repository';
 
 describe('AdoptionRequestMysqlRepository', () => {
-  let rawRepository: Repository<AdoptionRequestEntity>;
+  let entityManager: EntityManager;
   let repository: AdoptionRequestMysqlRepository;
 
   let request: AdoptionRequest;
@@ -12,8 +12,8 @@ describe('AdoptionRequestMysqlRepository', () => {
   let mockedFindOneById: jest.SpyInstance;
 
   beforeAll(async () => {
-    rawRepository = new Repository<AdoptionRequestEntity>(null, null);
-    repository = new AdoptionRequestMysqlRepository(rawRepository);
+    entityManager = new EntityManager(null);
+    repository = new AdoptionRequestMysqlRepository();
   });
 
   beforeEach(async () => {
@@ -23,20 +23,23 @@ describe('AdoptionRequestMysqlRepository', () => {
       petId: '',
     });
     mockedSave = jest
-      .spyOn(rawRepository, 'save')
+      .spyOn(entityManager, 'save')
       .mockImplementation(async () => {
         return AdoptionRequestEntity.create(request);
       });
     mockedFindOneById = jest
-      .spyOn(rawRepository, 'findOne')
+      .spyOn(entityManager, 'findOne')
       .mockImplementation(async () => {
         return AdoptionRequestEntity.create(request);
       });
   });
 
   it('AdoptionRequestMysqlRepository.save(Request)', async () => {
-    await repository.save(request);
-    const requestFromQuery = await repository.findOneById(request.id);
+    await repository.save(entityManager, request);
+    const requestFromQuery = await repository.findOneById(
+      entityManager,
+      request.id,
+    );
 
     expect(mockedSave).toBeCalled();
     expect(mockedFindOneById).toBeCalled();

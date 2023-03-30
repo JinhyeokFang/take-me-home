@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { EntityManager } from 'typeorm';
 import { AdoptionRequest } from '../domain/adoption-request';
 import { AdoptionRequestRepository } from '../domain/adoption-request.repository';
 import { RequestID } from '../domain/request-id';
@@ -12,13 +11,11 @@ import { AdoptionRequestEntity } from './adoption-request.entity';
 export class AdoptionRequestMysqlRepository
   implements AdoptionRequestRepository
 {
-  constructor(
-    @InjectRepository(AdoptionRequestEntity)
-    private readonly rawRepository: Repository<AdoptionRequestEntity>,
-  ) {}
-
-  async findByShelterID(shelterId: ShelterID): Promise<AdoptionRequest[]> {
-    const entities = await this.rawRepository.find({
+  async findByShelterID(
+    queryManager: EntityManager,
+    shelterId: ShelterID,
+  ): Promise<AdoptionRequest[]> {
+    const entities = await queryManager.find(AdoptionRequestEntity, {
       where: { shelterId },
     });
     const requests = entities.map((entity) =>
@@ -28,9 +25,10 @@ export class AdoptionRequestMysqlRepository
   }
 
   async findByRequestorID(
+    queryManager: EntityManager,
     requestorId: RequestorID,
   ): Promise<AdoptionRequest[]> {
-    const entities = await this.rawRepository.find({
+    const entities = await queryManager.find(AdoptionRequestEntity, {
       where: { requestorId },
     });
     const requests = entities.map((entity) =>
@@ -39,16 +37,22 @@ export class AdoptionRequestMysqlRepository
     return requests;
   }
 
-  async findOneById(id: RequestID): Promise<AdoptionRequest> {
-    const entity = await this.rawRepository.findOne({
+  async findOneById(
+    queryManager: EntityManager,
+    id: RequestID,
+  ): Promise<AdoptionRequest> {
+    const entity = await queryManager.findOne(AdoptionRequestEntity, {
       where: { id },
     });
     const request = AdoptionRequestEntity.toDomain(entity);
     return request;
   }
 
-  async save(adoptionRequest: AdoptionRequest): Promise<void> {
+  async save(
+    queryManager: EntityManager,
+    adoptionRequest: AdoptionRequest,
+  ): Promise<void> {
     const entity = AdoptionRequestEntity.create(adoptionRequest);
-    await this.rawRepository.save(entity);
+    await queryManager.save(entity);
   }
 }
