@@ -33,7 +33,7 @@ Event로 비즈니스 로직의 결합도를 낮춤
 - 더 많은 유스케이스
 - 더 많은 테스트
 - 예외처리 추가
-- Transaction 지원
+- Transaction 지원 (feature/transaction 에서 구현중)
 - Continuous Deployment를 적용한 자동 무중단 배포 (using AWS EC2)
 
 ## 프로젝트 설치 방법
